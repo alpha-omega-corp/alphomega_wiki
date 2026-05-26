@@ -16,7 +16,7 @@
     "@tiptap/extension-emoji": "^3.23.6",
     "@tiptap/extension-text-align": "^3.23.6",
     "@tiptap/vue-3": "^3.23.6",
-    "nuxt": "^4.1.0",
+    "nuxt": "^4.4.6",
     "tiptap-extension-code-block-shiki": "^1.2.0",
     "vue": "^3.5.13",
     "vue-router": "^4.5.1"
