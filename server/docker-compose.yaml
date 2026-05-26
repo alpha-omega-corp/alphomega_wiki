@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=wiki
+      - POSTGRES_USER=wiki
+      - POSTGRES_DB=wiki
+    volumes:
+      - pgdata_wiki:/var/lib/postgresql/data
+
+
+volumes:
+  pgdata_wiki:

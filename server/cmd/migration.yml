@@ -1,0 +1,569 @@
+- model: Page
+  rows:
+    - id: 1
+      slug: article-testy
+      title: Article Testy
+      published: true
+      tags:
+        - test
+        - works
+      content: |
+        This is the content of article 1.
+      
+- model: Page
+  rows:
+    - id: 2
+      slug: api
+      title: API Reference
+      published: true
+      tags:
+        - api
+        - rest
+        - reference
+      content: |
+        # API Reference
+
+        Base URL: `https://api.yourdomain.com/v1`
+
+        All requests must include the `Authorization: Bearer <token>` header.
+
+        ## Authentication
+
+        ```http
+        POST /auth/token
+        Content-Type: application/json
+
+        {
+          "email": "user@example.com",
+          "password": "secret"
+        }
+        ```
+
+        **Response:**
+
+        ```json
+        {
+          "access_token": "eyJhbGciOiJIUzI1NiIsInR...",
+          "expires_in": 3600
+        }
+        ```
+
+        ## Documents
+
+        ### List documents
+
+        ```http
+        GET /documents?page=1&limit=20
+        ```
+
+        ### Get document
+
+        ```http
+        GET /documents/:id
+        ```
+
+        ### Create document
+
+        ```http
+        POST /documents
+        Content-Type: application/json
+
+        {
+          "title": "My Document",
+          "content": "<p>Hello world</p>",
+          "category": "guides"
+        }
+        ```
+
+        ### Update document
+
+        ```http
+        PATCH /documents/:id
+        Content-Type: application/json
+
+        {
+          "title": "Updated Title"
+        }
+        ```
+
+        ### Delete document
+
+        ```http
+        DELETE /documents/:id
+        ```
+
+        ## Error Responses
+
+        All errors follow this shape:
+
+        ```json
+        {
+          "error": {
+            "code": "NOT_FOUND",
+            "message": "Document not found",
+            "status": 404
+          }
+        }
+        ```
+
+        | Code | Status | Description |
+        |------|--------|-------------|
+        | `UNAUTHORIZED` | 401 | Missing or invalid token |
+        | `FORBIDDEN` | 403 | Insufficient permissions |
+        | `NOT_FOUND` | 404 | Resource does not exist |
+        | `VALIDATION_ERROR` | 422 | Request body is invalid |
+        | `RATE_LIMITED` | 429 | Too many requests |
+
+- model: Page
+  rows:
+    - id: 3
+      slug: getting-started
+      title: Getting Started
+      published: true
+      parent_id: 1
+      tags:
+        - quickstart
+        - setup
+        - nuxt
+      content: |
+        # Getting Started
+
+        Welcome to **DevDocs** — the modern documentation platform built for developers who care about quality and speed.
+
+        ## Prerequisites
+
+        Before you begin, ensure you have the following installed:
+
+        - **Node.js** 18.x or later
+        - **npm** 9.x, **pnpm** 8.x, or **yarn** 1.x
+        - A code editor (we recommend VS Code)
+
+        ## Quick Install
+
+        The fastest way to get started is with our CLI tool:
+
+        ```bash
+        npx create-my-app my-project
+        cd my-project
+        npm run dev
+        ```
+
+        Your development server will start at `http://localhost:3000`.
+
+        ## Manual Setup
+
+        ### 1. Create a new project
+
+        ```bash
+        mkdir my-project && cd my-project
+        npm init -y
+        ```
+
+        ### 2. Install dependencies
+
+        ```bash
+        npm install nuxt @nuxt/ui @nuxt/content
+        ```
+
+        ### 3. Create your config file
+
+        Create a `nuxt.config.ts` at the root of your project:
+
+        ```typescript
+        export default defineNuxtConfig({
+          modules: ['@nuxt/ui', '@nuxt/content'],
+        })
+        ```
+
+        ### 4. Start the server
+
+        ```bash
+        npm run dev
+        ```
+
+        ## Project Structure
+
+        ```
+        my-project/
+        ├── assets/
+        │   └── css/
+        │       └── main.css
+        ├── components/
+        ├── content/
+        │   └── docs/
+        ├── layouts/
+        │   └── default.vue
+        ├── pages/
+        │   ├── index.vue
+        │   └── docs/
+        │       └── [...slug].vue
+        ├── nuxt.config.ts
+        └── package.json
+        ```
+
+        ## Next Steps
+
+        - [Installation](/docs/installation) — detailed setup for different environments
+        - [Configuration](/docs/configuration) — all available config options
+        - [Architecture](/docs/architecture) — understand how the system works
+
+- model: Page
+  rows:
+    - id: 4
+      slug: configuration
+      title: Configuration
+      published: true
+      parent_id: 2
+      tags:
+        - config
+        - settings
+        - typescript
+      content: |
+        # Configuration
+
+        DevDocs is configured through `nuxt.config.ts`. This page documents every available option.
+
+        ## Basic Configuration
+
+        ```typescript
+        export default defineNuxtConfig({
+          modules: ['@nuxt/ui', '@nuxt/content'],
+
+          app: {
+            head: {
+              title: 'My Docs',
+              meta: [
+                { name: 'description', content: 'My documentation site' }
+              ]
+            }
+          },
+
+          runtimeConfig: {
+            apiSecret: process.env.API_SECRET,
+            public: {
+              appName: process.env.NUXT_PUBLIC_APP_NAME || 'DevDocs',
+            }
+          },
+        })
+        ```
+
+        ## Content Configuration
+
+        ```typescript
+        export default defineNuxtConfig({
+          content: {
+            build: {
+              markdown: {
+                highlight: {
+                  theme: {
+                    default: 'github-light',
+                    dark: 'github-dark',
+                  },
+                  langs: ['ts', 'js', 'vue', 'bash', 'json'],
+                },
+                remarkPlugins: {},
+                rehypePlugins: {},
+              },
+            },
+            navigation: {
+              fields: ['title', 'description', 'order'],
+            },
+          },
+        })
+        ```
+
+        ## UI Configuration
+
+        ```typescript
+        export default defineNuxtConfig({
+          ui: {
+            primary: 'violet',
+            neutral: 'slate',
+          },
+        })
+        ```
+
+        ## Available Colors
+
+        The following colors are available as `primary`:
+
+        - `red` `orange` `amber` `yellow` `lime`
+        - `green` `emerald` `teal` `cyan` `sky`
+        - `blue` `indigo` `violet` `purple` `fuchsia`
+        - `pink` `rose`
+
+        ## TypeScript Configuration
+
+        ```json
+        {
+          "extends": "./.nuxt/tsconfig.json",
+          "compilerOptions": {
+            "strict": true,
+            "noUncheckedIndexedAccess": true
+          }
+        }
+        ```
+
+        ## Performance Options
+
+        ```typescript
+        export default defineNuxtConfig({
+          devtools: { enabled: true },
+
+          nitro: {
+            compressPublicAssets: true,
+            minify: true,
+          },
+
+          vite: {
+            optimizeDeps: {
+              include: ['@tiptap/vue-3'],
+            },
+          },
+        })
+        ```
+
+- model: Page
+  rows:
+    - id: 5
+      slug: deployment
+      title: Deployment
+      published: true
+      tags:
+        - deployment
+        - production
+        - hosting
+      content: |
+        # Deployment
+
+        This guide covers deploying your app to production environments.
+
+        ## Build for Production
+
+        ```bash
+        npm run build
+        ```
+
+        The output is placed in `.output/`. It is a self-contained Node.js server.
+
+        ## Environment Variables
+
+        Set environment variables on your hosting provider:
+
+        | Variable | Description |
+        |----------|-------------|
+        | `NUXT_PUBLIC_APP_NAME` | Public app name |
+        | `API_SECRET` | Server-side secret |
+        | `DATABASE_URL` | Database connection string |
+
+        ## Hosting Options
+
+        - **Vercel** — zero-config, push to deploy
+        - **Fly.io** — Docker-based, good for full-stack
+        - **Railway** — simple Postgres + Node bundles
+        - **Self-hosted** — run `.output/server/index.mjs` behind nginx
+
+- model: Page
+  rows:
+    - id: 6
+      slug: deployment-vercel
+      title: Deploying to Vercel
+      published: true
+      parent_id: 5
+      tags:
+        - deployment
+        - vercel
+      content: |
+        # Deploying to Vercel
+
+        ## Prerequisites
+
+        Install the Vercel CLI:
+
+        ```bash
+        npm i -g vercel
+        ```
+
+        ## Deploy
+
+        ```bash
+        vercel deploy --prod
+        ```
+
+        Vercel auto-detects Nuxt and sets the correct build command and output directory.
+
+        ## Custom Domain
+
+        In the Vercel dashboard go to **Settings → Domains** and add your domain.
+        DNS propagation typically takes under 5 minutes with Vercel's nameservers.
+
+- model: Page
+  rows:
+    - id: 7
+      slug: deployment-fly
+      title: Deploying to Fly.io
+      published: true
+      parent_id: 5
+      tags:
+        - deployment
+        - fly.io
+        - docker
+      content: |
+        # Deploying to Fly.io
+
+        ## Install flyctl
+
+        ```bash
+        curl -L https://fly.io/install.sh | sh
+        fly auth login
+        ```
+
+        ## Launch
+
+        ```bash
+        fly launch
+        ```
+
+        Fly generates a `fly.toml` and a `Dockerfile`. Review them, then:
+
+        ```bash
+        fly deploy
+        ```
+
+        ## Secrets
+
+        ```bash
+        fly secrets set API_SECRET=your_secret DATABASE_URL=postgres://...
+        ```
+
+- model: Page
+  rows:
+    - id: 8
+      slug: authentication
+      title: Authentication
+      published: true
+      tags:
+        - auth
+        - security
+        - jwt
+      content: |
+        # Authentication
+
+        DevDocs uses JWT-based authentication. Tokens are short-lived (1 hour) and
+        refreshed automatically via a rotating refresh token stored in an HttpOnly cookie.
+
+        ## Login
+
+        ```http
+        POST /auth/login
+        Content-Type: application/json
+
+        { "email": "user@example.com", "password": "secret" }
+        ```
+
+        **Response:**
+
+        ```json
+        { "access_token": "eyJ...", "expires_in": 3600 }
+        ```
+
+        ## Token Refresh
+
+        ```http
+        POST /auth/refresh
+        ```
+
+        The refresh token is read from the cookie automatically. A new access token is returned.
+
+        ## Logout
+
+        ```http
+        POST /auth/logout
+        ```
+
+        Clears the refresh token cookie server-side.
+
+- model: Page
+  rows:
+    - id: 9
+      slug: authentication-roles
+      title: Roles & Permissions
+      published: true
+      parent_id: 8
+      tags:
+        - auth
+        - roles
+        - permissions
+      content: |
+        # Roles & Permissions
+
+        | Role | Description |
+        |------|-------------|
+        | `viewer` | Read-only access to published pages |
+        | `editor` | Create and edit pages |
+        | `admin` | Full access including user management |
+
+        ## Assigning Roles
+
+        Roles are assigned per workspace. An admin can promote any member:
+
+        ```http
+        PATCH /workspace/members/:userId
+        Content-Type: application/json
+
+        { "role": "editor" }
+        ```
+
+        ## Middleware
+
+        Use the `requireRole` middleware to protect routes:
+
+        ```typescript
+        export default defineEventHandler(requireRole('editor', async (event) => {
+          // handler logic
+        }))
+        ```
+
+- model: Page
+  rows:
+    - id: 10
+      slug: authentication-sso
+      title: SSO / OAuth
+      published: true
+      parent_id: 8
+      tags:
+        - auth
+        - sso
+        - oauth
+        - oidc
+      content: |
+        # SSO / OAuth
+
+        DevDocs supports OAuth 2.0 / OIDC providers out of the box.
+
+        ## Supported Providers
+
+        - Google
+        - GitHub
+        - Microsoft (Entra ID)
+        - Any OIDC-compliant provider
+
+        ## Configuration
+
+        ```typescript
+        export default defineNuxtConfig({
+          runtimeConfig: {
+            oauth: {
+              google: {
+                clientId: process.env.GOOGLE_CLIENT_ID,
+                clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+              },
+            },
+          },
+        })
+        ```
+
+        ## Callback URL
+
+        Register `https://yourdomain.com/auth/callback/:provider` in your OAuth app settings.
+

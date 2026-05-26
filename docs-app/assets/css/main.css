@@ -1,0 +1,12 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+/* Shiki code block background — subtle contrast against the app background */
+html .shiki {
+  background-color: #e5e7eb !important; /* gray-200 */
+  border-radius: 0.5rem;
+}
+
+html.dark .shiki {
+  background-color: #111827 !important; /* gray-900 */
+}
