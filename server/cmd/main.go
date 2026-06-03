@@ -3,8 +3,6 @@ package main
 import (
 	"context"
 	"database/sql"
-	"dwiki/app/controllers"
-	"dwiki/app/models"
 	"fmt"
 	"log"
 	"net/http"
@@ -12,6 +10,8 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
+	"wiki/app/controllers"
+	"wiki/app/models"
 
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dbfixture"
@@ -63,6 +63,13 @@ func main() {
 		panic(err)
 	}
 
+	// collide with existing fixture rows on pages_pkey.
+	if _, err := db.NewRaw(
+		`SELECT setval(pg_get_serial_sequence('pages', 'id'), COALESCE((SELECT MAX(id) FROM pages), 1))`,
+	).Exec(ctx); err != nil {
+		panic(err)
+	}
+
 	router := bunrouter.New(
 		bunrouter.WithMiddleware(reqlog.NewMiddleware(
 			reqlog.WithEnabled(true),
@@ -73,13 +80,12 @@ func main() {
 			bunrouterotel.WithClientIP(),
 		)))
 
-	articleController := controllers.NewArticleController(db)
-	navigationController := controllers.NewNavigationController(db)
+	pageHandler := controllers.NewPageHandler(db)
 
-	router.POST("/page", articleController.Create)
-	router.GET("/page/:slug", articleController.GetOne)
-	router.GET("/pages", articleController.GetAll)
-	router.GET("/navigation", navigationController.GetAll)
+	router.GET("/pages", pageHandler.GetAll)
+	router.POST("/page", pageHandler.Create)
+	router.GET("/page/:slug", pageHandler.GetOne)
+	router.PUT("/page/:slug", pageHandler.Update)
 
 	httpServer := &http.Server{
 		Addr:         "localhost:1000",

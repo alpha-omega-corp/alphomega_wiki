@@ -534,6 +534,7 @@ const emojiItems: EditorEmojiMenuItem[] = gitHubEmojis.filter(emoji => !emoji.na
       v-slot="{ editor, handlers }"
       v-model="content"
       content-type="markdown"
+      :editor-props="{ attributes: { spellcheck: 'false' } }"
       :extensions="[
       Emoji,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
