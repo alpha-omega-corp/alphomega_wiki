@@ -35,5 +35,31 @@ function openModal(id: number) {
   createPageModal.value = true
 }
 
+// Persist the expanded-tree state (shared via useState in PageItem) to
+// localStorage so it survives full page reloads, not just navigations.
+const STORAGE_KEY = 'pagelist-expanded'
+const expanded = useState<Record<number, boolean>>('pagelist-expanded', () => ({}))
+
+onMounted(() => {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY)
+    if (saved) {
+      // Restore saved state, but let anything opened during this load (e.g. the
+      // active page's subtree) take precedence.
+      expanded.value = {...JSON.parse(saved), ...expanded.value}
+    }
+  } catch {
+    // Ignore unavailable/corrupt storage.
+  }
+
+  watch(expanded, (value) => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(value))
+    } catch {
+      // Ignore quota/availability errors.
+    }
+  }, {deep: true})
+})
+
 
 </script>

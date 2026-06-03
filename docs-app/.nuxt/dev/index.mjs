@@ -2643,16 +2643,16 @@ _wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw
 const assets = {
   "/index.mjs": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"2ca7e-EveIUDRuhK8ah+bJmFLEmpWve8k\"",
-    "mtime": "2026-06-03T13:01:34.019Z",
-    "size": 182910,
+    "etag": "\"2cccb-wxLvOPGeYFRyi/P66IoD0dp9jYI\"",
+    "mtime": "2026-06-03T16:57:58.698Z",
+    "size": 183499,
     "path": "index.mjs"
   },
   "/index.mjs.map": {
     "type": "application/json",
-    "etag": "\"aa9c1-SmPNudfmkatmHi6ussxdDmPLYKM\"",
-    "mtime": "2026-06-03T13:01:34.019Z",
-    "size": 698817,
+    "etag": "\"aad2d-8BOjUfey3bUDkoCKCwTHCyj/Kp8\"",
+    "mtime": "2026-06-03T16:57:58.702Z",
+    "size": 699693,
     "path": "index.mjs.map"
   }
 };
@@ -4424,16 +4424,18 @@ const _P1k2r4 = eventHandler(async (event) => {
   return loadDatabaseAdapter(conf).all(sql);
 });
 
+const _lazy_hdv0gF = () => Promise.resolve().then(function () { return _id__delete$1; });
+const _lazy_Gr4FtT = () => Promise.resolve().then(function () { return _id_$1; });
 const _lazy_8XrxG2 = () => Promise.resolve().then(function () { return _slug__put$1; });
-const _lazy_uIgJFB = () => Promise.resolve().then(function () { return _slug_$1; });
 const _lazy_odtoxZ = () => Promise.resolve().then(function () { return pages_post$1; });
 const _lazy_EXGpsv = () => Promise.resolve().then(function () { return pages$1; });
 const _lazy_2cSf3Q = () => Promise.resolve().then(function () { return renderer; });
 
 const handlers = [
   { route: '', handler: _mutNeE, lazy: false, middleware: true, method: undefined },
+  { route: '/api/page/:id', handler: _lazy_hdv0gF, lazy: true, middleware: false, method: "delete" },
+  { route: '/api/page/:id', handler: _lazy_Gr4FtT, lazy: true, middleware: false, method: undefined },
   { route: '/api/page/:slug', handler: _lazy_8XrxG2, lazy: true, middleware: false, method: "put" },
-  { route: '/api/page/:slug', handler: _lazy_uIgJFB, lazy: true, middleware: false, method: undefined },
   { route: '/api/pages', handler: _lazy_odtoxZ, lazy: true, middleware: false, method: "post" },
   { route: '/api/pages', handler: _lazy_EXGpsv, lazy: true, middleware: false, method: undefined },
   { route: '/__nuxt_error', handler: _lazy_2cSf3Q, lazy: true, middleware: false, method: undefined },
@@ -4850,19 +4852,16 @@ const styles$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   default: styles
 }, Symbol.toStringTag, { value: 'Module' }));
 
-const _slug__put = defineEventHandler(async (event) => {
-  const slug = getRouterParam(event, "slug");
-  const body = await readBody(event);
-  const current = await $fetch(`http://localhost:1000/page/${slug}`);
-  return $fetch(`http://localhost:1000/page/${slug}`, {
-    method: "PUT",
-    body: { ...current, ...body }
+const _id__delete = defineEventHandler(async (event) => {
+  const id = getRouterParam(event, "id");
+  return $fetch(`http://localhost:1000/page/${id}`, {
+    method: "DELETE"
   });
 });
 
-const _slug__put$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+const _id__delete$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,
-  default: _slug__put
+  default: _id__delete
 }, Symbol.toStringTag, { value: 'Module' }));
 
 function createShikiHighlighter$1({
@@ -5045,14 +5044,13 @@ function createShikiHighlighter$1({
 const highlighter$1 = createShikiHighlighter$1({
   bundledLangs: {
     ...bundledLanguages,
-    // Register the `golang` alias so ```golang fences highlight like ```go.
     golang: bundledLanguages.go
   },
   bundledThemes: bundledThemes$1
 });
-const _slug_ = defineEventHandler(async (event) => {
-  const slug = getRouterParam(event, "slug");
-  const page = await $fetch(`http://localhost:1000/page/${slug}`);
+const _id_ = defineEventHandler(async (event) => {
+  const id = getRouterParam(event, "id");
+  const page = await $fetch(`http://localhost:1000/page/${id}`);
   const parsed = await parseMarkdown(page.content, {
     highlight: {
       highlighter: highlighter$1,
@@ -5072,9 +5070,24 @@ const _slug_ = defineEventHandler(async (event) => {
   };
 });
 
-const _slug_$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+const _id_$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,
-  default: _slug_
+  default: _id_
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const _slug__put = defineEventHandler(async (event) => {
+  const slug = getRouterParam(event, "slug");
+  const body = await readBody(event);
+  const current = await $fetch(`http://localhost:1000/page/${slug}`);
+  return $fetch(`http://localhost:1000/page/${slug}`, {
+    method: "PUT",
+    body: { ...current, ...body }
+  });
+});
+
+const _slug__put$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: _slug__put
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const pages_post = defineEventHandler(async (event) => {

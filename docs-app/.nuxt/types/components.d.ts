@@ -14,11 +14,11 @@ type HydrationStrategies = {
 type LazyComponent<T> = DefineComponent<HydrationStrategies, {}, {}, {}, {}, {}, {}, { hydrated: () => void }> & T
 
 interface _GlobalComponents {
-  CreateArticleModal: typeof import("../../components/CreateArticleModal.vue")['default']
   CreatePage: typeof import("../../components/CreatePage.vue")['default']
   Page: typeof import("../../components/Page.vue")['default']
   PageItem: typeof import("../../components/PageItem.vue")['default']
   PageList: typeof import("../../components/PageList.vue")['default']
+  PageTocs: typeof import("../../components/PageTocs.vue")['default']
   Editor: typeof import("../../components/editor/Editor.vue")['default']
   EditorImageUploadExtension: typeof import("../../components/editor/EditorImageUploadExtension")['default']
   EditorLinkPopover: typeof import("../../components/editor/EditorLinkPopover.vue")['default']
@@ -235,11 +235,11 @@ interface _GlobalComponents {
   MDCRenderer: typeof import("../../node_modules/@nuxtjs/mdc/dist/runtime/components/MDCRenderer.vue")['default']
   MDCSlot: typeof import("../../node_modules/@nuxtjs/mdc/dist/runtime/components/MDCSlot.vue")['default']
   NuxtIsland: typeof import("../../node_modules/nuxt/dist/app/components/nuxt-island")['default']
-  LazyCreateArticleModal: LazyComponent<typeof import("../../components/CreateArticleModal.vue")['default']>
   LazyCreatePage: LazyComponent<typeof import("../../components/CreatePage.vue")['default']>
   LazyPage: LazyComponent<typeof import("../../components/Page.vue")['default']>
   LazyPageItem: LazyComponent<typeof import("../../components/PageItem.vue")['default']>
   LazyPageList: LazyComponent<typeof import("../../components/PageList.vue")['default']>
+  LazyPageTocs: LazyComponent<typeof import("../../components/PageTocs.vue")['default']>
   LazyEditor: LazyComponent<typeof import("../../components/editor/Editor.vue")['default']>
   LazyEditorImageUploadExtension: LazyComponent<typeof import("../../components/editor/EditorImageUploadExtension")['default']>
   LazyEditorLinkPopover: LazyComponent<typeof import("../../components/editor/EditorLinkPopover.vue")['default']>

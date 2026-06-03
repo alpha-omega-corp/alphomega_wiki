@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50 dark:bg-gray-950">
+  <div class="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-950">
     <!-- Top Navigation Bar -->
     <header
         class="sticky top-0 z-50 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur">
@@ -34,35 +34,42 @@
     </header>
 
     <!-- App Content -->
-    <slot/>
+    <main class="flex-1">
+      <slot/>
+    </main>
 
-  
+
     <!-- Footer -->
-    <UFooter class="border-t border-gray-200 dark:border-gray-800">
+    <UFooter>
       <template #left>
-        <p class="text-sm text-gray-500">
-          © {{ new Date().getFullYear() }} DevDocs. All rights reserved.
-        </p>
+        <p class="text-muted text-sm">Copyright © {{ new Date().getFullYear() }}</p>
       </template>
 
-      <UButton
-          v-for="item in navItems"
-          :key="item.to"
-          :to="item.to"
-          variant="ghost"
-          color="neutral"
-          size="sm"
-          :label="item.label"
-      />
+      <UNavigationMenu :items="items" variant="link"/>
 
       <template #right>
         <UButton
-            icon="i-simple-icons-github"
-            to="https://github.com"
-            target="_blank"
-            variant="ghost"
+            icon="i-simple-icons-discord"
             color="neutral"
-            size="sm"
+            variant="ghost"
+            to="https://go.nuxt.com/discord"
+            target="_blank"
+            aria-label="Discord"
+        />
+        <UButton
+            icon="i-simple-icons-x"
+            color="neutral"
+            variant="ghost"
+            to="https://go.nuxt.com/x"
+            target="_blank"
+            aria-label="X"
+        />
+        <UButton
+            icon="i-simple-icons-github"
+            color="neutral"
+            variant="ghost"
+            to="https://github.com/nuxt/nuxt"
+            target="_blank"
             aria-label="GitHub"
         />
       </template>
@@ -76,5 +83,25 @@ const colorMode = useColorMode()
 const navItems = [
   {label: 'Home', to: '/'},
   {label: 'Documentation', to: '/docs'},
+]
+
+import type {NavigationMenuItem} from '@nuxt/ui'
+
+const items: NavigationMenuItem[] = [
+  {
+    label: 'Figma Kit',
+    to: 'https://go.nuxt.com/figma-ui',
+    target: '_blank'
+  },
+  {
+    label: 'Playground',
+    to: 'https://stackblitz.com/edit/nuxt-ui',
+    target: '_blank'
+  },
+  {
+    label: 'Releases',
+    to: 'https://github.com/nuxt/ui/releases',
+    target: '_blank'
+  }
 ]
 </script>

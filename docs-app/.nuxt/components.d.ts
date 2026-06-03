@@ -14,11 +14,11 @@ type HydrationStrategies = {
 type LazyComponent<T> = DefineComponent<HydrationStrategies, {}, {}, {}, {}, {}, {}, { hydrated: () => void }> & T
 
 
-export const CreateArticleModal: typeof import("../components/CreateArticleModal.vue")['default']
 export const CreatePage: typeof import("../components/CreatePage.vue")['default']
 export const Page: typeof import("../components/Page.vue")['default']
 export const PageItem: typeof import("../components/PageItem.vue")['default']
 export const PageList: typeof import("../components/PageList.vue")['default']
+export const PageTocs: typeof import("../components/PageTocs.vue")['default']
 export const Editor: typeof import("../components/editor/Editor.vue")['default']
 export const EditorImageUploadExtension: typeof import("../components/editor/EditorImageUploadExtension")['default']
 export const EditorLinkPopover: typeof import("../components/editor/EditorLinkPopover.vue")['default']
@@ -235,11 +235,11 @@ export const MDCCached: typeof import("../node_modules/@nuxtjs/mdc/dist/runtime/
 export const MDCRenderer: typeof import("../node_modules/@nuxtjs/mdc/dist/runtime/components/MDCRenderer.vue")['default']
 export const MDCSlot: typeof import("../node_modules/@nuxtjs/mdc/dist/runtime/components/MDCSlot.vue")['default']
 export const NuxtIsland: typeof import("../node_modules/nuxt/dist/app/components/nuxt-island")['default']
-export const LazyCreateArticleModal: LazyComponent<typeof import("../components/CreateArticleModal.vue")['default']>
 export const LazyCreatePage: LazyComponent<typeof import("../components/CreatePage.vue")['default']>
 export const LazyPage: LazyComponent<typeof import("../components/Page.vue")['default']>
 export const LazyPageItem: LazyComponent<typeof import("../components/PageItem.vue")['default']>
 export const LazyPageList: LazyComponent<typeof import("../components/PageList.vue")['default']>
+export const LazyPageTocs: LazyComponent<typeof import("../components/PageTocs.vue")['default']>
 export const LazyEditor: LazyComponent<typeof import("../components/editor/Editor.vue")['default']>
 export const LazyEditorImageUploadExtension: LazyComponent<typeof import("../components/editor/EditorImageUploadExtension")['default']>
 export const LazyEditorLinkPopover: LazyComponent<typeof import("../components/editor/EditorLinkPopover.vue")['default']>

@@ -1,22 +1,15 @@
 <script setup lang="ts">
-import Editor from "~/components/editor/Editor.vue"
+import type {Page} from "~/types/page";
 
-const route = useRoute()
-const slug = computed(() => {
-  const s = route.params.slug
-  return Array.isArray(s) ? s.join('/') : s
-})
-
-const {data: page} = await useAsyncData(
-    `docs-${slug.value}`,
-    () => $fetch(`/api/page/${slug.value}`),
-    {watch: [slug]}
-)
+const props = defineProps<{
+  page?: Page,
+  slug: string,
+}>()
 
 const breadcrumbs = computed(() => [
   {label: 'Home', to: '/', icon: 'i-heroicons-home'},
   {label: 'Docs', to: '/docs/getting-started'},
-  {label: page.value?.title ?? page.value?.slug},
+  {label: props.page?.title ?? props.slug},
 ])
 
 const editorOpen = ref(false)
@@ -24,17 +17,12 @@ defineShortcuts({
   o: () => (editorOpen.value = !editorOpen.value)
 })
 
-type TocLink = { id: string; text: string; children?: TocLink[] }
-type FlatLink = { id: string; text: string; indent: number }
-
-function flattenToc(links: TocLink[], indent = 0): FlatLink[] {
-  return links.flatMap(link => [
-    {id: link.id, text: link.text, indent},
-    ...flattenToc(link.children ?? [], indent + 1),
-  ])
+// After saving in the editor, re-fetch the page so the rendered article reflects
+// the new content, and close the drawer.
+async function onSaved() {
+  await refreshNuxtData(`docs-${props.slug}`)
+  editorOpen.value = false
 }
-
-
 </script>
 
 <template>
@@ -44,11 +32,11 @@ function flattenToc(links: TocLink[], indent = 0): FlatLink[] {
       <div class="flex justify-between items-center mb-6">
         <UBreadcrumb :items="breadcrumbs"/>
         <UDrawer v-model:open="editorOpen" handle-only should-scale-background set-background-color-on-scale>
-          <UButton label="Edit" color="primary" variant="subtle" icon="i-lucide-eye"/>
+          <UButton label="Edit" color="secondary" variant="subtle" icon="i-lucide-eye"/>
 
           <template #content>
             <UContainer class="overflow-y-scroll">
-              <Editor :value="page.content"></Editor>
+              <Editor :value="page.content" :slug="slug" @saved="onSaved"></Editor>
             </UContainer>
           </template>
         </UDrawer>
@@ -56,8 +44,11 @@ function flattenToc(links: TocLink[], indent = 0): FlatLink[] {
 
 
       <article class="prose dark:prose-invert max-w-none overflow-y-scroll">
-        <ContentRenderer :key="page.slug" :value="page.body" class="mt-4"/>
+        <ContentRenderer :key="slug" :value="page" class="mt-4"/>
       </article>
+
+      <!-- Extra scroll space below the content. -->
+      <div class="h-[200px]" aria-hidden="true"/>
 
     </template>
 
@@ -70,9 +61,11 @@ function flattenToc(links: TocLink[], indent = 0): FlatLink[] {
       </UCard>
     </template>
   </main>
-
 </template>
 
 <style scoped>
-
+/* Keep anchored headings clear of the sticky header when jumped to. */
+.prose :deep(:is(h1, h2, h3, h4, h5, h6)[id]) {
+  scroll-margin-top: 96px;
+}
 </style>
