@@ -1,5 +1,5 @@
 import * as ui from '#build/ui'
-import type { TVConfig } from '@nuxt/ui'
+import type { TVConfig, DeepRequired } from '@nuxt/ui'
 import type { defaultConfig } from 'tailwind-variants'
 import colors from 'tailwindcss/colors'
 
@@ -23,6 +23,8 @@ type AppConfigUI = {
   tv?: typeof defaultConfig
 } & TVConfig<typeof ui>
 
+type AppConfigRuntimeUI = DeepRequired<Pick<AppConfigUI, 'colors' | 'icons' | 'tv'>> & Omit<AppConfigUI, 'colors' | 'icons' | 'tv'>
+
 declare module '@nuxt/schema' {
   interface AppConfigInput {
     /**
@@ -30,6 +32,9 @@ declare module '@nuxt/schema' {
      * @see https://ui.nuxt.com/docs/getting-started/theme/components
      */
     ui?: AppConfigUI
+  }
+  interface AppConfig {
+    ui: AppConfigRuntimeUI
   }
 }
 

@@ -45,8 +45,8 @@ export default {
     "placeholder": "truncate text-dimmed",
     "arrow": "fill-bg stroke-default",
     "content": [
-      "max-h-[min(15rem,var(--reka-select-content-available-height))] w-(--reka-select-trigger-width) bg-default shadow-lg rounded-md ring ring-default overflow-hidden origin-(--reka-select-content-transform-origin) pointer-events-auto flex flex-col",
-      "max-h-[min(15rem,var(--reka-combobox-content-available-height))] origin-(--reka-combobox-content-transform-origin) w-(--reka-combobox-trigger-width)"
+      "max-h-[min(15rem,var(--reka-select-content-available-height,15rem))] w-(--reka-select-trigger-width) bg-default shadow-lg rounded-md ring ring-default overflow-hidden origin-(--reka-select-content-transform-origin) pointer-events-auto flex flex-col",
+      "max-h-[min(15rem,var(--reka-combobox-content-available-height,15rem))] origin-(--reka-combobox-content-transform-origin) w-(--reka-combobox-trigger-width)"
     ],
     "viewport": "relative scroll-py-1 overflow-y-auto flex-1",
     "group": "p-1 isolate",

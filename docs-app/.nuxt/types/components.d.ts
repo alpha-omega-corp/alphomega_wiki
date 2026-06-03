@@ -15,15 +15,14 @@ type LazyComponent<T> = DefineComponent<HydrationStrategies, {}, {}, {}, {}, {},
 
 interface _GlobalComponents {
   CreateArticleModal: typeof import("../../components/CreateArticleModal.vue")['default']
-  DocsSidebar: typeof import("../../components/DocsSidebar.vue")['default']
-  Editor: typeof import("../../components/Editor.vue")['default']
-  EditorImageUploadExtension: typeof import("../../components/EditorImageUploadExtension")['default']
-  EditorLinkPopover: typeof import("../../components/EditorLinkPopover.vue")['default']
-  EditorUseCompletion: typeof import("../../components/EditorUseCompletion")['default']
-  MobileNav: typeof import("../../components/MobileNav.vue")['default']
-  NavLink: typeof import("../../components/NavLink.vue")['default']
-  RichEditor: typeof import("../../components/RichEditor.vue")['default']
-  SidebarItem: typeof import("../../components/SidebarItem.vue")['default']
+  CreatePage: typeof import("../../components/CreatePage.vue")['default']
+  Page: typeof import("../../components/Page.vue")['default']
+  PageItem: typeof import("../../components/PageItem.vue")['default']
+  PageList: typeof import("../../components/PageList.vue")['default']
+  Editor: typeof import("../../components/editor/Editor.vue")['default']
+  EditorImageUploadExtension: typeof import("../../components/editor/EditorImageUploadExtension")['default']
+  EditorLinkPopover: typeof import("../../components/editor/EditorLinkPopover.vue")['default']
+  EditorUseCompletion: typeof import("../../components/editor/EditorUseCompletion")['default']
   ProseA: typeof import("../../node_modules/@nuxt/ui/dist/runtime/components/prose/A.vue")['default']
   ProseAccordion: typeof import("../../node_modules/@nuxt/ui/dist/runtime/components/prose/Accordion.vue")['default']
   ProseAccordionItem: typeof import("../../node_modules/@nuxt/ui/dist/runtime/components/prose/AccordionItem.vue")['default']
@@ -237,15 +236,14 @@ interface _GlobalComponents {
   MDCSlot: typeof import("../../node_modules/@nuxtjs/mdc/dist/runtime/components/MDCSlot.vue")['default']
   NuxtIsland: typeof import("../../node_modules/nuxt/dist/app/components/nuxt-island")['default']
   LazyCreateArticleModal: LazyComponent<typeof import("../../components/CreateArticleModal.vue")['default']>
-  LazyDocsSidebar: LazyComponent<typeof import("../../components/DocsSidebar.vue")['default']>
-  LazyEditor: LazyComponent<typeof import("../../components/Editor.vue")['default']>
-  LazyEditorImageUploadExtension: LazyComponent<typeof import("../../components/EditorImageUploadExtension")['default']>
-  LazyEditorLinkPopover: LazyComponent<typeof import("../../components/EditorLinkPopover.vue")['default']>
-  LazyEditorUseCompletion: LazyComponent<typeof import("../../components/EditorUseCompletion")['default']>
-  LazyMobileNav: LazyComponent<typeof import("../../components/MobileNav.vue")['default']>
-  LazyNavLink: LazyComponent<typeof import("../../components/NavLink.vue")['default']>
-  LazyRichEditor: LazyComponent<typeof import("../../components/RichEditor.vue")['default']>
-  LazySidebarItem: LazyComponent<typeof import("../../components/SidebarItem.vue")['default']>
+  LazyCreatePage: LazyComponent<typeof import("../../components/CreatePage.vue")['default']>
+  LazyPage: LazyComponent<typeof import("../../components/Page.vue")['default']>
+  LazyPageItem: LazyComponent<typeof import("../../components/PageItem.vue")['default']>
+  LazyPageList: LazyComponent<typeof import("../../components/PageList.vue")['default']>
+  LazyEditor: LazyComponent<typeof import("../../components/editor/Editor.vue")['default']>
+  LazyEditorImageUploadExtension: LazyComponent<typeof import("../../components/editor/EditorImageUploadExtension")['default']>
+  LazyEditorLinkPopover: LazyComponent<typeof import("../../components/editor/EditorLinkPopover.vue")['default']>
+  LazyEditorUseCompletion: LazyComponent<typeof import("../../components/editor/EditorUseCompletion")['default']>
   LazyProseA: LazyComponent<typeof import("../../node_modules/@nuxt/ui/dist/runtime/components/prose/A.vue")['default']>
   LazyProseAccordion: LazyComponent<typeof import("../../node_modules/@nuxt/ui/dist/runtime/components/prose/Accordion.vue")['default']>
   LazyProseAccordionItem: LazyComponent<typeof import("../../node_modules/@nuxt/ui/dist/runtime/components/prose/AccordionItem.vue")['default']>

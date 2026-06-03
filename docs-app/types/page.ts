@@ -1,7 +1,12 @@
+import type {MDCParserResult} from "@nuxtjs/mdc";
+
 export interface Page {
-  slug: string
-  title: string
-  published: boolean
-  tags: string[]
-  content: string
+    id: number
+    slug: string
+    title: string
+    published: boolean
+    tags?: string[]
+    content: string
+    pages?: Page[]
+    parsedContent: MDCParserResult
 }

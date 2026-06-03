@@ -1,4 +1,4 @@
-@source "/home/nanstis/test/docs-app/**/*";
+@source "/home/nanstis/pages/docs-app/**/*";
 @source inline("isolate");
 @source "./ui";
 

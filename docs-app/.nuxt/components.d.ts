@@ -15,15 +15,14 @@ type LazyComponent<T> = DefineComponent<HydrationStrategies, {}, {}, {}, {}, {},
 
 
 export const CreateArticleModal: typeof import("../components/CreateArticleModal.vue")['default']
-export const DocsSidebar: typeof import("../components/DocsSidebar.vue")['default']
-export const Editor: typeof import("../components/Editor.vue")['default']
-export const EditorImageUploadExtension: typeof import("../components/EditorImageUploadExtension")['default']
-export const EditorLinkPopover: typeof import("../components/EditorLinkPopover.vue")['default']
-export const EditorUseCompletion: typeof import("../components/EditorUseCompletion")['default']
-export const MobileNav: typeof import("../components/MobileNav.vue")['default']
-export const NavLink: typeof import("../components/NavLink.vue")['default']
-export const RichEditor: typeof import("../components/RichEditor.vue")['default']
-export const SidebarItem: typeof import("../components/SidebarItem.vue")['default']
+export const CreatePage: typeof import("../components/CreatePage.vue")['default']
+export const Page: typeof import("../components/Page.vue")['default']
+export const PageItem: typeof import("../components/PageItem.vue")['default']
+export const PageList: typeof import("../components/PageList.vue")['default']
+export const Editor: typeof import("../components/editor/Editor.vue")['default']
+export const EditorImageUploadExtension: typeof import("../components/editor/EditorImageUploadExtension")['default']
+export const EditorLinkPopover: typeof import("../components/editor/EditorLinkPopover.vue")['default']
+export const EditorUseCompletion: typeof import("../components/editor/EditorUseCompletion")['default']
 export const ProseA: typeof import("../node_modules/@nuxt/ui/dist/runtime/components/prose/A.vue")['default']
 export const ProseAccordion: typeof import("../node_modules/@nuxt/ui/dist/runtime/components/prose/Accordion.vue")['default']
 export const ProseAccordionItem: typeof import("../node_modules/@nuxt/ui/dist/runtime/components/prose/AccordionItem.vue")['default']
@@ -237,15 +236,14 @@ export const MDCRenderer: typeof import("../node_modules/@nuxtjs/mdc/dist/runtim
 export const MDCSlot: typeof import("../node_modules/@nuxtjs/mdc/dist/runtime/components/MDCSlot.vue")['default']
 export const NuxtIsland: typeof import("../node_modules/nuxt/dist/app/components/nuxt-island")['default']
 export const LazyCreateArticleModal: LazyComponent<typeof import("../components/CreateArticleModal.vue")['default']>
-export const LazyDocsSidebar: LazyComponent<typeof import("../components/DocsSidebar.vue")['default']>
-export const LazyEditor: LazyComponent<typeof import("../components/Editor.vue")['default']>
-export const LazyEditorImageUploadExtension: LazyComponent<typeof import("../components/EditorImageUploadExtension")['default']>
-export const LazyEditorLinkPopover: LazyComponent<typeof import("../components/EditorLinkPopover.vue")['default']>
-export const LazyEditorUseCompletion: LazyComponent<typeof import("../components/EditorUseCompletion")['default']>
-export const LazyMobileNav: LazyComponent<typeof import("../components/MobileNav.vue")['default']>
-export const LazyNavLink: LazyComponent<typeof import("../components/NavLink.vue")['default']>
-export const LazyRichEditor: LazyComponent<typeof import("../components/RichEditor.vue")['default']>
-export const LazySidebarItem: LazyComponent<typeof import("../components/SidebarItem.vue")['default']>
+export const LazyCreatePage: LazyComponent<typeof import("../components/CreatePage.vue")['default']>
+export const LazyPage: LazyComponent<typeof import("../components/Page.vue")['default']>
+export const LazyPageItem: LazyComponent<typeof import("../components/PageItem.vue")['default']>
+export const LazyPageList: LazyComponent<typeof import("../components/PageList.vue")['default']>
+export const LazyEditor: LazyComponent<typeof import("../components/editor/Editor.vue")['default']>
+export const LazyEditorImageUploadExtension: LazyComponent<typeof import("../components/editor/EditorImageUploadExtension")['default']>
+export const LazyEditorLinkPopover: LazyComponent<typeof import("../components/editor/EditorLinkPopover.vue")['default']>
+export const LazyEditorUseCompletion: LazyComponent<typeof import("../components/editor/EditorUseCompletion")['default']>
 export const LazyProseA: LazyComponent<typeof import("../node_modules/@nuxt/ui/dist/runtime/components/prose/A.vue")['default']>
 export const LazyProseAccordion: LazyComponent<typeof import("../node_modules/@nuxt/ui/dist/runtime/components/prose/Accordion.vue")['default']>
 export const LazyProseAccordionItem: LazyComponent<typeof import("../node_modules/@nuxt/ui/dist/runtime/components/prose/AccordionItem.vue")['default']>

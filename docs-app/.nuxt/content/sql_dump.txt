@@ -1,5 +1,0 @@
-CREATE TABLE IF NOT EXISTS _content_info (id TEXT PRIMARY KEY, "ready" BOOLEAN, "structureVersion" VARCHAR, "version" VARCHAR, "__hash__" TEXT UNIQUE); -- structure
-INSERT INTO _content_info VALUES ('checksum_docs', false, 'quFkNIUZZFAwcn0ok74-KsIERem9u0p5DW-cqEgxrPA', 'v3.5.0--quFkNIUZZFAwcn0ok74-KsIERem9u0p5DW-cqEgxrPA', 'DACVbgrcV3ccxWw-hGvGRSQunW7LIZxvGWXFTjw-ALo'); -- meta
-DROP TABLE IF EXISTS _content_docs; -- structure
-CREATE TABLE IF NOT EXISTS _content_docs (id TEXT PRIMARY KEY, "title" VARCHAR, "body" TEXT, "description" VARCHAR, "extension" VARCHAR, "meta" TEXT, "navigation" TEXT DEFAULT true, "path" VARCHAR, "seo" TEXT DEFAULT '{}', "stem" VARCHAR, "__hash__" TEXT UNIQUE); -- structure
-UPDATE _content_info SET ready = true WHERE id = 'checksum_docs'; -- meta

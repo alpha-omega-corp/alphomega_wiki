@@ -16,10 +16,42 @@ const { extension: completionExtension, handlers: aiHandlers, isLoading: aiLoadi
 
 const props = defineProps<{
   value: string,
+  slug?: string,
 }>()
 
+const emit = defineEmits<{ saved: [] }>()
+
 const content = ref(props.value)
-console.log(content)
+
+const saving = ref(false)
+const toast = useToast()
+
+async function save() {
+  if (!props.slug) return
+  saving.value = true
+  try {
+    await $fetch(`/api/page/${props.slug}`, {
+      method: 'PUT',
+      body: { content: content.value },
+    })
+    toast.add({
+      title: 'Saved',
+      description: 'Page content updated.',
+      color: 'success',
+      icon: 'i-lucide-check',
+    })
+    emit('saved')
+  } catch (e: any) {
+    toast.add({
+      title: 'Save failed',
+      description: e?.data?.message ?? e?.message ?? 'Could not save the page.',
+      color: 'error',
+      icon: 'i-lucide-triangle-alert',
+    })
+  } finally {
+    saving.value = false
+  }
+}
 
 const customHandlers = {
   imageUpload: {
@@ -149,6 +181,18 @@ const fixedToolbarItems = [[{
     label: 'Align Justify'
   }]
 }]] satisfies EditorToolbarItem<typeof customHandlers>[][]
+
+// Append a Save button to the fixed toolbar (kept reactive for the loading state).
+const fixedToolbarItemsWithSave = computed<EditorToolbarItem<typeof customHandlers>[][]>(() => [
+  ...fixedToolbarItems,
+  [{
+    icon: 'i-lucide-save',
+    label: 'Save',
+    tooltip: { text: 'Save changes' },
+    loading: saving.value,
+    onClick: () => save()
+  }]
+])
 
 const bubbleToolbarItems = computed(() => [[{
   icon: 'i-lucide-sparkles',
@@ -553,7 +597,7 @@ const emojiItems: EditorEmojiMenuItem[] = gitHubEmojis.filter(emoji => !emoji.na
       :ui="{ base: 'p-8 sm:px-16 py-13.5' }"
       class="w-full"
   >
-    <UEditorToolbar :editor="editor" :items="fixedToolbarItems" class="border-b border-muted sticky top-0 inset-x-0 px-8 sm:px-16 py-2 z-50 bg-default overflow-x-auto">
+    <UEditorToolbar :editor="editor" :items="fixedToolbarItemsWithSave" class="border-b border-muted sticky top-0 inset-x-0 px-8 sm:px-16 py-2 z-50 bg-default overflow-x-auto">
       <template #link>
         <EditorLinkPopover :editor="editor" auto-open />
       </template>

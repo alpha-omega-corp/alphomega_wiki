@@ -1,7 +1,7 @@
 {
-  "_hash": "D41lnQQV1NMhYpB630Mk9TZUNDLK1KxkPvjU6yi2tT4",
+  "_hash": "AUgEGLrIfVNOyFSN38ZPKgcNB12_dwNH3Wj0prA1uYY",
   "project": {
-    "rootDir": "/home/nanstis/test/docs-app"
+    "rootDir": "/home/nanstis/pages/docs-app"
   },
   "versions": {
     "nuxt": "4.4.5"

@@ -1,68 +1,67 @@
 import process from 'node:process';globalThis._importMeta_={url:import.meta.url,env:process.env};import { tmpdir } from 'node:os';
-import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, createError, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, getResponseStatus, getQuery as getQuery$1, getRouterParam, setHeader, readBody, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatusText } from 'file:///home/nanstis/test/docs-app/node_modules/h3/dist/index.mjs';
+import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, createError, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, getResponseStatus, getQuery as getQuery$1, getRouterParam, setHeader, readBody, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatusText } from 'file:///home/nanstis/pages/docs-app/node_modules/h3/dist/index.mjs';
 import { Server } from 'node:http';
 import { resolve, dirname, join } from 'node:path';
 import crypto$1 from 'node:crypto';
 import { parentPort, threadId } from 'node:worker_threads';
-import { escapeHtml } from 'file:///home/nanstis/test/docs-app/node_modules/@vue/shared/dist/shared.cjs.js';
-import _RemarkEmoji from 'file:///home/nanstis/test/docs-app/node_modules/remark-emoji/index.js';
-import { visit } from 'file:///home/nanstis/test/docs-app/node_modules/unist-util-visit/index.js';
-import { toString } from 'file:///home/nanstis/test/docs-app/node_modules/hast-util-to-string/index.js';
-import viteNodeEntry_mjs from 'file:///home/nanstis/test/docs-app/node_modules/@nuxt/vite-builder/dist/vite-node-entry.mjs';
-import { viteNodeFetch } from 'file:///home/nanstis/test/docs-app/node_modules/@nuxt/vite-builder/dist/vite-node.mjs';
-import rehypeSlug from 'file:///home/nanstis/test/docs-app/node_modules/rehype-slug/index.js';
-import { bundledLanguages, bundledThemes as bundledThemes$1 } from 'file:///home/nanstis/test/docs-app/node_modules/shiki/dist/index.mjs';
-import { unified } from 'file:///home/nanstis/test/docs-app/node_modules/unified/index.js';
-import remarkParse from 'file:///home/nanstis/test/docs-app/node_modules/remark-parse/index.js';
-import remark2rehype from 'file:///home/nanstis/test/docs-app/node_modules/remark-rehype/index.js';
-import remarkMDC, { parseFrontMatter } from 'file:///home/nanstis/test/docs-app/node_modules/remark-mdc/dist/index.mjs';
-import defu, { defuFn, defu as defu$1 } from 'file:///home/nanstis/test/docs-app/node_modules/defu/dist/defu.mjs';
-import remarkGFM from 'file:///home/nanstis/test/docs-app/node_modules/remark-gfm/index.js';
-import rehypeExternalLinks from 'file:///home/nanstis/test/docs-app/node_modules/rehype-external-links/index.js';
-import rehypeSortAttributeValues from 'file:///home/nanstis/test/docs-app/node_modules/rehype-sort-attribute-values/index.js';
-import rehypeSortAttributes from 'file:///home/nanstis/test/docs-app/node_modules/rehype-sort-attributes/index.js';
-import rehypeRaw from 'file:///home/nanstis/test/docs-app/node_modules/rehype-raw/index.js';
-import { detab } from 'file:///home/nanstis/test/docs-app/node_modules/detab/index.js';
-import { snakeCase, kebabCase } from 'file:///home/nanstis/test/docs-app/node_modules/scule/dist/index.mjs';
-import { normalizeUri } from 'file:///home/nanstis/test/docs-app/node_modules/micromark-util-sanitize-uri/dev/index.js';
-import Slugger from 'file:///home/nanstis/test/docs-app/node_modules/github-slugger/index.js';
-import { createJavaScriptRegexEngine } from 'file:///home/nanstis/test/docs-app/node_modules/@shikijs/engine-javascript/dist/index.mjs';
-import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'file:///home/nanstis/test/docs-app/node_modules/vue-bundle-renderer/dist/runtime.mjs';
-import { parseURL, withoutBase, joinURL, getQuery, withQuery, withTrailingSlash, decodePath, withLeadingSlash, withoutTrailingSlash, joinRelativeURL, encodePath } from 'file:///home/nanstis/test/docs-app/node_modules/ufo/dist/index.mjs';
-import destr, { destr as destr$1 } from 'file:///home/nanstis/test/docs-app/node_modules/destr/dist/index.mjs';
-import { createHooks } from 'file:///home/nanstis/test/docs-app/node_modules/hookable/dist/index.mjs';
-import { createFetch, Headers as Headers$1 } from 'file:///home/nanstis/test/docs-app/node_modules/ofetch/dist/node.mjs';
-import { fetchNodeRequestHandler, callNodeRequestHandler } from 'file:///home/nanstis/test/docs-app/node_modules/node-mock-http/dist/index.mjs';
-import { createStorage, defineDriver, prefixStorage } from 'file:///home/nanstis/test/docs-app/node_modules/unstorage/dist/index.mjs';
-import unstorage_47drivers_47fs from 'file:///home/nanstis/test/docs-app/node_modules/unstorage/drivers/fs.mjs';
-import fsDriver from 'file:///home/nanstis/test/docs-app/node_modules/unstorage/drivers/fs-lite.mjs';
-import lruCache from 'file:///home/nanstis/test/docs-app/node_modules/unstorage/drivers/lru-cache.mjs';
-import { digest, hash as hash$1 } from 'file:///home/nanstis/test/docs-app/node_modules/ohash/dist/index.mjs';
-import { klona } from 'file:///home/nanstis/test/docs-app/node_modules/klona/dist/index.mjs';
-import { getContext } from 'file:///home/nanstis/test/docs-app/node_modules/unctx/dist/index.mjs';
-import { toRouteMatcher, createRouter } from 'file:///home/nanstis/test/docs-app/node_modules/radix3/dist/index.mjs';
+import { escapeHtml } from 'file:///home/nanstis/pages/docs-app/node_modules/@vue/shared/dist/shared.cjs.js';
+import _RemarkEmoji from 'file:///home/nanstis/pages/docs-app/node_modules/remark-emoji/index.js';
+import { visit } from 'file:///home/nanstis/pages/docs-app/node_modules/unist-util-visit/index.js';
+import { toString } from 'file:///home/nanstis/pages/docs-app/node_modules/hast-util-to-string/index.js';
+import viteNodeEntry_mjs from 'file:///home/nanstis/pages/docs-app/node_modules/@nuxt/vite-builder/dist/vite-node-entry.mjs';
+import { viteNodeFetch } from 'file:///home/nanstis/pages/docs-app/node_modules/@nuxt/vite-builder/dist/vite-node.mjs';
+import { bundledLanguages, bundledThemes as bundledThemes$1 } from 'file:///home/nanstis/pages/docs-app/node_modules/shiki/dist/index.mjs';
+import { unified } from 'file:///home/nanstis/pages/docs-app/node_modules/unified/index.js';
+import remarkParse from 'file:///home/nanstis/pages/docs-app/node_modules/remark-parse/index.js';
+import remark2rehype from 'file:///home/nanstis/pages/docs-app/node_modules/remark-rehype/index.js';
+import remarkMDC, { parseFrontMatter } from 'file:///home/nanstis/pages/docs-app/node_modules/remark-mdc/dist/index.mjs';
+import defu, { defuFn, defu as defu$1 } from 'file:///home/nanstis/pages/docs-app/node_modules/defu/dist/defu.mjs';
+import remarkGFM from 'file:///home/nanstis/pages/docs-app/node_modules/remark-gfm/index.js';
+import rehypeExternalLinks from 'file:///home/nanstis/pages/docs-app/node_modules/rehype-external-links/index.js';
+import rehypeSortAttributeValues from 'file:///home/nanstis/pages/docs-app/node_modules/rehype-sort-attribute-values/index.js';
+import rehypeSortAttributes from 'file:///home/nanstis/pages/docs-app/node_modules/rehype-sort-attributes/index.js';
+import rehypeRaw from 'file:///home/nanstis/pages/docs-app/node_modules/rehype-raw/index.js';
+import { detab } from 'file:///home/nanstis/pages/docs-app/node_modules/detab/index.js';
+import { snakeCase, kebabCase } from 'file:///home/nanstis/pages/docs-app/node_modules/scule/dist/index.mjs';
+import { normalizeUri } from 'file:///home/nanstis/pages/docs-app/node_modules/micromark-util-sanitize-uri/dev/index.js';
+import Slugger from 'file:///home/nanstis/pages/docs-app/node_modules/github-slugger/index.js';
+import { createJavaScriptRegexEngine } from 'file:///home/nanstis/pages/docs-app/node_modules/@shikijs/engine-javascript/dist/index.mjs';
+import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'file:///home/nanstis/pages/docs-app/node_modules/vue-bundle-renderer/dist/runtime.mjs';
+import { parseURL, withoutBase, joinURL, getQuery, withQuery, withTrailingSlash, decodePath, withLeadingSlash, withoutTrailingSlash, joinRelativeURL, encodePath } from 'file:///home/nanstis/pages/docs-app/node_modules/ufo/dist/index.mjs';
+import destr, { destr as destr$1 } from 'file:///home/nanstis/pages/docs-app/node_modules/destr/dist/index.mjs';
+import { createHooks } from 'file:///home/nanstis/pages/docs-app/node_modules/hookable/dist/index.mjs';
+import { createFetch, Headers as Headers$1 } from 'file:///home/nanstis/pages/docs-app/node_modules/ofetch/dist/node.mjs';
+import { fetchNodeRequestHandler, callNodeRequestHandler } from 'file:///home/nanstis/pages/docs-app/node_modules/node-mock-http/dist/index.mjs';
+import { createStorage, defineDriver, prefixStorage } from 'file:///home/nanstis/pages/docs-app/node_modules/unstorage/dist/index.mjs';
+import unstorage_47drivers_47fs from 'file:///home/nanstis/pages/docs-app/node_modules/unstorage/drivers/fs.mjs';
+import fsDriver from 'file:///home/nanstis/pages/docs-app/node_modules/unstorage/drivers/fs-lite.mjs';
+import lruCache from 'file:///home/nanstis/pages/docs-app/node_modules/unstorage/drivers/lru-cache.mjs';
+import { digest, hash as hash$1 } from 'file:///home/nanstis/pages/docs-app/node_modules/ohash/dist/index.mjs';
+import { klona } from 'file:///home/nanstis/pages/docs-app/node_modules/klona/dist/index.mjs';
+import { getContext } from 'file:///home/nanstis/pages/docs-app/node_modules/unctx/dist/index.mjs';
+import { toRouteMatcher, createRouter } from 'file:///home/nanstis/pages/docs-app/node_modules/radix3/dist/index.mjs';
 import { readFile } from 'node:fs/promises';
-import consola, { consola as consola$1 } from 'file:///home/nanstis/test/docs-app/node_modules/consola/dist/index.mjs';
-import { ErrorParser } from 'file:///home/nanstis/test/docs-app/node_modules/youch-core/build/index.js';
-import { Youch } from 'file:///home/nanstis/test/docs-app/node_modules/youch/build/index.js';
-import { SourceMapConsumer } from 'file:///home/nanstis/test/docs-app/node_modules/source-map/source-map.js';
+import consola, { consola as consola$1 } from 'file:///home/nanstis/pages/docs-app/node_modules/consola/dist/index.mjs';
+import { ErrorParser } from 'file:///home/nanstis/pages/docs-app/node_modules/youch-core/build/index.js';
+import { Youch } from 'file:///home/nanstis/pages/docs-app/node_modules/youch/build/index.js';
+import { SourceMapConsumer } from 'file:///home/nanstis/pages/docs-app/node_modules/source-map/source-map.js';
 import { AsyncLocalStorage } from 'node:async_hooks';
-import { stringify, uneval } from 'file:///home/nanstis/test/docs-app/node_modules/devalue/index.js';
-import { captureRawStackTrace, parseRawStackTrace } from 'file:///home/nanstis/test/docs-app/node_modules/errx/dist/index.js';
-import { isVNode, isRef, toValue } from 'file:///home/nanstis/test/docs-app/node_modules/vue/index.mjs';
-import _wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw from 'file:///home/nanstis/test/docs-app/node_modules/@nuxt/vite-builder/dist/fix-stacktrace.mjs';
+import { stringify, uneval } from 'file:///home/nanstis/pages/docs-app/node_modules/devalue/index.js';
+import { captureRawStackTrace, parseRawStackTrace } from 'file:///home/nanstis/pages/docs-app/node_modules/errx/dist/index.js';
+import { isVNode, isRef, toValue } from 'file:///home/nanstis/pages/docs-app/node_modules/vue/index.mjs';
+import _wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw from 'file:///home/nanstis/pages/docs-app/node_modules/@nuxt/vite-builder/dist/fix-stacktrace.mjs';
 import { promises } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { dirname as dirname$1, resolve as resolve$1, basename, isAbsolute } from 'file:///home/nanstis/test/docs-app/node_modules/pathe/dist/index.mjs';
-import { getIcons } from 'file:///home/nanstis/test/docs-app/node_modules/@iconify/utils/lib/index.js';
-import { collections } from 'file:///home/nanstis/test/docs-app/.nuxt/nuxt-icon-server-bundle.mjs';
-import { createHead as createHead$1, propsToString, renderSSRHead } from 'file:///home/nanstis/test/docs-app/node_modules/unhead/dist/server.mjs';
-import { renderToString } from 'file:///home/nanstis/test/docs-app/node_modules/vue/server-renderer/index.mjs';
-import { walkResolver } from 'file:///home/nanstis/test/docs-app/node_modules/unhead/dist/utils.mjs';
-import sqliteConnector from 'file:///home/nanstis/test/docs-app/node_modules/db0/dist/connectors/node-sqlite.mjs';
-import { createOnigurumaEngine } from 'file:///home/nanstis/test/docs-app/node_modules/@shikijs/engine-oniguruma/dist/index.mjs';
+import { dirname as dirname$1, resolve as resolve$1, basename, isAbsolute } from 'file:///home/nanstis/pages/docs-app/node_modules/pathe/dist/index.mjs';
+import { getIcons } from 'file:///home/nanstis/pages/docs-app/node_modules/@iconify/utils/lib/index.js';
+import { collections } from 'file:///home/nanstis/pages/docs-app/.nuxt/nuxt-icon-server-bundle.mjs';
+import { createHead as createHead$1, propsToString, renderSSRHead } from 'file:///home/nanstis/pages/docs-app/node_modules/unhead/dist/server.mjs';
+import { renderToString } from 'file:///home/nanstis/pages/docs-app/node_modules/vue/server-renderer/index.mjs';
+import { walkResolver } from 'file:///home/nanstis/pages/docs-app/node_modules/unhead/dist/utils.mjs';
+import localAdapter from 'file:///home/nanstis/pages/docs-app/node_modules/db0/dist/connectors/better-sqlite3.mjs';
+import { createOnigurumaEngine } from 'file:///home/nanstis/pages/docs-app/node_modules/@shikijs/engine-oniguruma/dist/index.mjs';
 
-const serverAssets = [{"baseName":"server","dir":"/home/nanstis/test/docs-app/server/assets"}];
+const serverAssets = [{"baseName":"server","dir":"/home/nanstis/pages/docs-app/server/assets"}];
 
 const assets$1 = createStorage();
 
@@ -83,7 +82,7 @@ function normalizeFsKey (item) {
   return `${prefix}-${hash}`
 }
 
-const _47home_47nanstis_47test_47docs_45app_47node_modules_47_64nuxt_47nitro_45server_47dist_47runtime_47utils_47cache_45driver_46js = defineDriver(
+const _47home_47nanstis_47pages_47docs_45app_47node_modules_47_64nuxt_47nitro_45server_47dist_47runtime_47utils_47cache_45driver_46js = defineDriver(
   /**
    * @param {{ base?: string }} opts
    */
@@ -113,12 +112,12 @@ const storage = createStorage({});
 
 storage.mount('/assets', assets$1);
 
-storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/home/nanstis/test/docs-app","watchOptions":{"ignored":[null]}}));
-storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/home/nanstis/test/docs-app/server","watchOptions":{"ignored":[null]}}));
-storage.mount('cache:nuxt:payload', _47home_47nanstis_47test_47docs_45app_47node_modules_47_64nuxt_47nitro_45server_47dist_47runtime_47utils_47cache_45driver_46js({"driver":"/home/nanstis/test/docs-app/node_modules/@nuxt/nitro-server/dist/runtime/utils/cache-driver.js","base":"/home/nanstis/test/docs-app/.nuxt/cache/nuxt/payload"}));
-storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/home/nanstis/test/docs-app/.nuxt"}));
-storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/home/nanstis/test/docs-app/.nuxt/cache"}));
-storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"/home/nanstis/test/docs-app/.data/kv"}));
+storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/home/nanstis/pages/docs-app","watchOptions":{"ignored":[null]}}));
+storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/home/nanstis/pages/docs-app/server","watchOptions":{"ignored":[null]}}));
+storage.mount('cache:nuxt:payload', _47home_47nanstis_47pages_47docs_45app_47node_modules_47_64nuxt_47nitro_45server_47dist_47runtime_47utils_47cache_45driver_46js({"driver":"/home/nanstis/pages/docs-app/node_modules/@nuxt/nitro-server/dist/runtime/utils/cache-driver.js","base":"/home/nanstis/pages/docs-app/.nuxt/cache/nuxt/payload"}));
+storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/home/nanstis/pages/docs-app/.nuxt"}));
+storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/home/nanstis/pages/docs-app/.nuxt/cache"}));
+storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"/home/nanstis/pages/docs-app/.data/kv"}));
 
 function useStorage(base = "") {
   return base ? prefixStorage(storage, base) : storage;
@@ -1111,7 +1110,7 @@ const _inlineRuntimeConfig = {
     },
     "localDatabase": {
       "type": "sqlite",
-      "filename": "/home/nanstis/test/docs-app/.data/content/contents.sqlite"
+      "filename": "/home/nanstis/pages/docs-app/.data/content/contents.sqlite"
     },
     "integrityCheck": true
   }
@@ -2515,13 +2514,13 @@ if (!window.__NUXT_DEVTOOLS_TIME_METRIC__) {
 window.__NUXT_DEVTOOLS_TIME_METRIC__.appInit = Date.now()
 `;
 
-const _QsVjVGE44DcUs7f0mqTnySBPyIzZuCti3cu73suuuQc = (function(nitro) {
+const _B4GPdOomPPJNDj7ibbUy8GTmCTHKtWMDRLat2kthIM = (function(nitro) {
   nitro.hooks.hook("render:html", (htmlContext) => {
     htmlContext.head.push(`<script>${script$1}<\/script>`);
   });
 });
 
-const rootDir = "/home/nanstis/test/docs-app";
+const rootDir = "/home/nanstis/pages/docs-app";
 
 const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"}],"link":[],"style":[],"script":[],"noscript":[]};
 
@@ -2551,7 +2550,7 @@ const asyncContext = getContext("nuxt-dev", {
 	asyncContext: true,
 	AsyncLocalStorage
 });
-const _sRpZWjBbHL9LWNEsquXb7duhXubrwydkGFKwyYTE3kQ = (nitroApp) => {
+const _ww31cHznhJ8zqM0pCydPbCMFuAZ5juYfgt1dBN_nN4 = (nitroApp) => {
 	const handler = nitroApp.h3App.handler;
 	nitroApp.h3App.handler = (event) => {
 		return asyncContext.callAsync({
@@ -2628,32 +2627,32 @@ function onConsoleLog(callback) {
 
 const script = "\"use strict\";(()=>{const t=window,e=document.documentElement,c=[\"dark\",\"light\"],n=getStorageValue(\"localStorage\",\"nuxt-color-mode\")||\"system\";let i=n===\"system\"?u():n;const r=e.getAttribute(\"data-color-mode-forced\");r&&(i=r),l(i),t[\"__NUXT_COLOR_MODE__\"]={preference:n,value:i,getColorScheme:u,addColorScheme:l,removeColorScheme:d};function l(o){const s=\"\"+o+\"\",a=\"\";e.classList?e.classList.add(s):e.className+=\" \"+s,a&&e.setAttribute(\"data-\"+a,o)}function d(o){const s=\"\"+o+\"\",a=\"\";e.classList?e.classList.remove(s):e.className=e.className.replace(new RegExp(s,\"g\"),\"\"),a&&e.removeAttribute(\"data-\"+a)}function f(o){return t.matchMedia(\"(prefers-color-scheme\"+o+\")\")}function u(){if(t.matchMedia&&f(\"\").media!==\"not all\"){for(const o of c)if(f(\":\"+o).matches)return o}return\"light\"}})();function getStorageValue(t,e){switch(t){case\"localStorage\":return window.localStorage.getItem(e);case\"sessionStorage\":return window.sessionStorage.getItem(e);case\"cookie\":return getCookie(e);default:return null}}function getCookie(t){const c=(\"; \"+window.document.cookie).split(\"; \"+t+\"=\");if(c.length===2)return c.pop()?.split(\";\").shift()}";
 
-const _fWxgNYBR4aOIwUYmRGFRK46mVXQXUG3wJOY_WpGIWog = (function(nitro) {
+const _meqpCVhGWe_c4D0pT6lYEKYCySpbCeV9vS0tu3sey8w = (function(nitro) {
   nitro.hooks.hook("render:html", (htmlContext) => {
     htmlContext.head.push(`<script>${script}<\/script>`);
   });
 });
 
 const plugins = [
-  _QsVjVGE44DcUs7f0mqTnySBPyIzZuCti3cu73suuuQc,
-_sRpZWjBbHL9LWNEsquXb7duhXubrwydkGFKwyYTE3kQ,
-_fWxgNYBR4aOIwUYmRGFRK46mVXQXUG3wJOY_WpGIWog,
+  _B4GPdOomPPJNDj7ibbUy8GTmCTHKtWMDRLat2kthIM,
+_ww31cHznhJ8zqM0pCydPbCMFuAZ5juYfgt1dBN_nN4,
+_meqpCVhGWe_c4D0pT6lYEKYCySpbCeV9vS0tu3sey8w,
 _wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw
 ];
 
 const assets = {
   "/index.mjs": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"2cbf2-LIP2+gBhb19tsFQuOnKFxQnHHeY\"",
-    "mtime": "2026-05-25T19:57:52.231Z",
-    "size": 183282,
+    "etag": "\"2ca7e-EveIUDRuhK8ah+bJmFLEmpWve8k\"",
+    "mtime": "2026-06-03T13:01:34.019Z",
+    "size": 182910,
     "path": "index.mjs"
   },
   "/index.mjs.map": {
     "type": "application/json",
-    "etag": "\"ab017-RrqKUEVOgjRreil7xJORA3rkC4Q\"",
-    "mtime": "2026-05-25T19:57:52.235Z",
-    "size": 700439,
+    "etag": "\"aa9c1-SmPNudfmkatmHi6ussxdDmPLYKM\"",
+    "mtime": "2026-06-03T13:01:34.019Z",
+    "size": 698817,
     "path": "index.mjs.map"
   }
 };
@@ -2681,7 +2680,7 @@ function getAsset (id) {
 
 const METHODS = /* @__PURE__ */ new Set(["HEAD", "GET"]);
 const EncodingMap = { gzip: ".gz", br: ".br" };
-const _6RIG1h = eventHandler((event) => {
+const _mutNeE = eventHandler((event) => {
   if (event.method && !METHODS.has(event.method)) {
     return;
   }
@@ -2835,12 +2834,8 @@ function publicAssetsURL(...path) {
 	return path.length ? joinRelativeURL(publicBase, ...path) : publicBase;
 }
 
-const checksums = {
-  "docs": "v3.5.0--quFkNIUZZFAwcn0ok74-KsIERem9u0p5DW-cqEgxrPA"
-};
-const checksumsStructure = {
-  "docs": "quFkNIUZZFAwcn0ok74-KsIERem9u0p5DW-cqEgxrPA"
-};
+const checksums = {};
+const checksumsStructure = {};
 const tables = {
   "docs": "_content_docs",
   "info": "_content_info"
@@ -3691,7 +3686,7 @@ function getInstallCommand(pkg) {
   if (ua.startsWith("bun")) return `bun add -D ${pkg}`;
   return `npm i -D ${pkg}`;
 }
-const _qQ3aas = defineCachedEventHandler(async (event) => {
+const _q0DggC = defineCachedEventHandler(async (event) => {
   const url = getRequestURL(event);
   if (!url)
     return createError({ status: 400, message: "Invalid icon request" });
@@ -3749,7 +3744,7 @@ const _qQ3aas = defineCachedEventHandler(async (event) => {
   // 1 week
 });
 
-const _TeF39c = eventHandler(async (event) => {
+const _RuxMWf = eventHandler(async (event) => {
   const collection = getRouterParam(event, "collection") || event.path?.split("/")?.[2] || "";
   setHeader(event, "Content-Type", "text/plain");
   const data = await useStorage().getItem(`build:content:database.compressed.mjs`) || "";
@@ -3760,7 +3755,7 @@ const _TeF39c = eventHandler(async (event) => {
       return content.substring(lineStart.length, content.length - 1);
     }
   }
-  return await import('file:///home/nanstis/test/docs-app/.nuxt/content/database.compressed.mjs').then((m) => m[collection]);
+  return await import('file:///home/nanstis/pages/docs-app/.nuxt/content/database.compressed.mjs').then((m) => m[collection]);
 });
 
 const VueResolver = (_, value) => {
@@ -4177,22 +4172,12 @@ function getCollectionName(table) {
   return table.replace(/^_content_/, "");
 }
 
-const originalEmit = process.emit;
-process.emit = function(...args) {
-  const name = args[0];
-  const data = args[1];
-  if (name === `warning` && typeof data === `object` && data.name === `ExperimentalWarning` && data.message.includes(`SQLite is an experimental feature`)) {
-    return false;
-  }
-  return originalEmit.apply(process, args);
-};
-
 let db;
 function loadDatabaseAdapter(config) {
   const { database, localDatabase } = config;
   if (!db) {
     {
-      db = sqliteConnector(refineDatabaseConfig(localDatabase));
+      db = localAdapter(refineDatabaseConfig(localDatabase));
     }
   }
   return {
@@ -4428,7 +4413,7 @@ function cleanupQuery(query, options = { removeString: false }) {
   return result;
 }
 
-const _61SRnM = eventHandler(async (event) => {
+const _P1k2r4 = eventHandler(async (event) => {
   const { sql } = await readBody(event);
   const collection = getRouterParam(event, "collection") || event.path?.split("/")?.[2] || "";
   assertSafeQuery(sql, collection);
@@ -4439,27 +4424,27 @@ const _61SRnM = eventHandler(async (event) => {
   return loadDatabaseAdapter(conf).all(sql);
 });
 
-const _lazy_6cQJeB = () => Promise.resolve().then(function () { return navigation$1; });
-const _lazy_8EMFNe = () => Promise.resolve().then(function () { return _slug_$1; });
-const _lazy_IEveOC = () => Promise.resolve().then(function () { return pages_post$1; });
-const _lazy_XYXLY_ = () => Promise.resolve().then(function () { return pages$1; });
-const _lazy_y8Xtdy = () => Promise.resolve().then(function () { return renderer; });
+const _lazy_8XrxG2 = () => Promise.resolve().then(function () { return _slug__put$1; });
+const _lazy_uIgJFB = () => Promise.resolve().then(function () { return _slug_$1; });
+const _lazy_odtoxZ = () => Promise.resolve().then(function () { return pages_post$1; });
+const _lazy_EXGpsv = () => Promise.resolve().then(function () { return pages$1; });
+const _lazy_2cSf3Q = () => Promise.resolve().then(function () { return renderer; });
 
 const handlers = [
-  { route: '', handler: _6RIG1h, lazy: false, middleware: true, method: undefined },
-  { route: '/api/navigation', handler: _lazy_6cQJeB, lazy: true, middleware: false, method: undefined },
-  { route: '/api/page/:slug', handler: _lazy_8EMFNe, lazy: true, middleware: false, method: undefined },
-  { route: '/api/pages', handler: _lazy_IEveOC, lazy: true, middleware: false, method: "post" },
-  { route: '/api/pages', handler: _lazy_XYXLY_, lazy: true, middleware: false, method: undefined },
-  { route: '/__nuxt_error', handler: _lazy_y8Xtdy, lazy: true, middleware: false, method: undefined },
-  { route: '/api/_nuxt_icon/:collection', handler: _qQ3aas, lazy: false, middleware: false, method: undefined },
-  { route: '/__nuxt_content/docs/sql_dump.txt', handler: _TeF39c, lazy: false, middleware: false, method: undefined },
-  { route: '/__nuxt_content/info/sql_dump.txt', handler: _TeF39c, lazy: false, middleware: false, method: undefined },
+  { route: '', handler: _mutNeE, lazy: false, middleware: true, method: undefined },
+  { route: '/api/page/:slug', handler: _lazy_8XrxG2, lazy: true, middleware: false, method: "put" },
+  { route: '/api/page/:slug', handler: _lazy_uIgJFB, lazy: true, middleware: false, method: undefined },
+  { route: '/api/pages', handler: _lazy_odtoxZ, lazy: true, middleware: false, method: "post" },
+  { route: '/api/pages', handler: _lazy_EXGpsv, lazy: true, middleware: false, method: undefined },
+  { route: '/__nuxt_error', handler: _lazy_2cSf3Q, lazy: true, middleware: false, method: undefined },
+  { route: '/api/_nuxt_icon/:collection', handler: _q0DggC, lazy: false, middleware: false, method: undefined },
+  { route: '/__nuxt_content/docs/sql_dump.txt', handler: _RuxMWf, lazy: false, middleware: false, method: undefined },
+  { route: '/__nuxt_content/info/sql_dump.txt', handler: _RuxMWf, lazy: false, middleware: false, method: undefined },
   { route: '/__nuxt_island/**', handler: handler$1, lazy: false, middleware: false, method: undefined },
-  { route: '/__nuxt_content/docs/query', handler: _61SRnM, lazy: false, middleware: false, method: undefined },
-  { route: '/__nuxt_content/info/query', handler: _61SRnM, lazy: false, middleware: false, method: undefined },
-  { route: '/_fonts/**', handler: _lazy_y8Xtdy, lazy: true, middleware: false, method: undefined },
-  { route: '/**', handler: _lazy_y8Xtdy, lazy: true, middleware: false, method: undefined }
+  { route: '/__nuxt_content/docs/query', handler: _P1k2r4, lazy: false, middleware: false, method: undefined },
+  { route: '/__nuxt_content/info/query', handler: _P1k2r4, lazy: false, middleware: false, method: undefined },
+  { route: '/_fonts/**', handler: _lazy_2cSf3Q, lazy: true, middleware: false, method: undefined },
+  { route: '/**', handler: _lazy_2cSf3Q, lazy: true, middleware: false, method: undefined }
 ];
 
 function createNitroApp() {
@@ -4865,15 +4850,19 @@ const styles$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   default: styles
 }, Symbol.toStringTag, { value: 'Module' }));
 
-const navigation = defineCachedEventHandler(async () => {
-  return $fetch("http://localhost:1000/navigation");
-}, {
-  getKey: () => "navigation"
+const _slug__put = defineEventHandler(async (event) => {
+  const slug = getRouterParam(event, "slug");
+  const body = await readBody(event);
+  const current = await $fetch(`http://localhost:1000/page/${slug}`);
+  return $fetch(`http://localhost:1000/page/${slug}`, {
+    method: "PUT",
+    body: { ...current, ...body }
+  });
 });
 
-const navigation$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+const _slug__put$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,
-  default: navigation
+  default: _slug__put
 }, Symbol.toStringTag, { value: 'Module' }));
 
 function createShikiHighlighter$1({
@@ -4887,8 +4876,8 @@ function createShikiHighlighter$1({
 } = {}) {
   let shiki;
   async function _getShiki() {
-    const { createHighlighterCore, addClassToHast, isSpecialLang, isSpecialTheme } = await import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/core/dist/index.mjs');
-    const { transformerNotationDiff, transformerNotationErrorLevel, transformerNotationFocus, transformerNotationHighlight } = await import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/transformers/dist/index.mjs');
+    const { createHighlighterCore, addClassToHast, isSpecialLang, isSpecialTheme } = await import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/core/dist/index.mjs');
+    const { transformerNotationDiff, transformerNotationErrorLevel, transformerNotationFocus, transformerNotationHighlight } = await import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/transformers/dist/index.mjs');
     const shiki2 = await createHighlighterCore({
       langs,
       themes,
@@ -5054,11 +5043,14 @@ function createShikiHighlighter$1({
 }
 
 const highlighter$1 = createShikiHighlighter$1({
-  bundledLangs: bundledLanguages,
+  bundledLangs: {
+    ...bundledLanguages,
+    // Register the `golang` alias so ```golang fences highlight like ```go.
+    golang: bundledLanguages.go
+  },
   bundledThemes: bundledThemes$1
 });
 const _slug_ = defineEventHandler(async (event) => {
-  var _a, _b, _c, _d, _e, _f, _g;
   const slug = getRouterParam(event, "slug");
   const page = await $fetch(`http://localhost:1000/page/${slug}`);
   const parsed = await parseMarkdown(page.content, {
@@ -5068,27 +5060,15 @@ const _slug_ = defineEventHandler(async (event) => {
         default: "github-light",
         dark: "github-dark"
       }
-    },
-    rehype: {
-      plugins: {
-        "rehype-slug": { instance: rehypeSlug }
-      }
     }
   });
-  const styleIndex = (_c = (_b = (_a = parsed.body) == null ? void 0 : _a.children) == null ? void 0 : _b.findIndex((child) => child.tag === "style")) != null ? _c : -1;
-  let highlightCSS = "";
-  if (styleIndex !== -1) {
-    highlightCSS = (_g = (_f = (_e = (_d = parsed.body.children[styleIndex]) == null ? void 0 : _d.children) == null ? void 0 : _e[0]) == null ? void 0 : _f.value) != null ? _g : "";
-    parsed.body.children.splice(styleIndex, 1);
-  }
   return {
     title: page.title,
     slug: page.slug,
     tags: page.tags,
     content: page.content,
     body: parsed.body,
-    toc: parsed.toc,
-    highlightCSS
+    toc: parsed.toc
   };
 });
 
@@ -5099,7 +5079,8 @@ const _slug_$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
 
 const pages_post = defineEventHandler(async (event) => {
   const body = await readBody(event);
-  return $fetch("http://localhost:1000/pages", {
+  console.log(body);
+  return $fetch("http://localhost:1000/page", {
     method: "POST",
     body
   });
@@ -5111,7 +5092,7 @@ const pages_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProper
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const pages = defineEventHandler(() => {
-  return $fetch("http://localhost:1000/navigation");
+  return $fetch("http://localhost:1000/pages");
 });
 
 const pages$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
@@ -5409,8 +5390,8 @@ function createShikiHighlighter({
 } = {}) {
   let shiki;
   async function _getShiki() {
-    const { createHighlighterCore, addClassToHast, isSpecialLang, isSpecialTheme } = await import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/core/dist/index.mjs');
-    const { transformerNotationDiff, transformerNotationErrorLevel, transformerNotationFocus, transformerNotationHighlight } = await import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/transformers/dist/index.mjs');
+    const { createHighlighterCore, addClassToHast, isSpecialLang, isSpecialTheme } = await import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/core/dist/index.mjs');
+    const { transformerNotationDiff, transformerNotationErrorLevel, transformerNotationFocus, transformerNotationHighlight } = await import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/transformers/dist/index.mjs');
     const shiki2 = await createHighlighterCore({
       langs,
       themes,
@@ -5576,39 +5557,39 @@ function createShikiHighlighter({
 }
 
 const bundledLangs = {
-"javascript": () => import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/langs/dist/javascript.mjs').then(r => r.default || r),
-"js": () => import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/langs/dist/javascript.mjs').then(r => r.default || r),
-"cjs": () => import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/langs/dist/javascript.mjs').then(r => r.default || r),
-"mjs": () => import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/langs/dist/javascript.mjs').then(r => r.default || r),
-"typescript": () => import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/langs/dist/typescript.mjs').then(r => r.default || r),
-"ts": () => import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/langs/dist/typescript.mjs').then(r => r.default || r),
-"cts": () => import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/langs/dist/typescript.mjs').then(r => r.default || r),
-"mts": () => import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/langs/dist/typescript.mjs').then(r => r.default || r),
-"vue": () => import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/langs/dist/vue.mjs').then(r => r.default || r),
-"jsx": () => import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/langs/dist/jsx.mjs').then(r => r.default || r),
-"tsx": () => import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/langs/dist/tsx.mjs').then(r => r.default || r),
-"html": () => import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/langs/dist/html.mjs').then(r => r.default || r),
-"css": () => import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/langs/dist/css.mjs').then(r => r.default || r),
-"json": () => import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/langs/dist/json.mjs').then(r => r.default || r),
-"shellscript": () => import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/langs/dist/shellscript.mjs').then(r => r.default || r),
-"bash": () => import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/langs/dist/shellscript.mjs').then(r => r.default || r),
-"sh": () => import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/langs/dist/shellscript.mjs').then(r => r.default || r),
-"shell": () => import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/langs/dist/shellscript.mjs').then(r => r.default || r),
-"zsh": () => import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/langs/dist/shellscript.mjs').then(r => r.default || r),
-"markdown": () => import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/langs/dist/markdown.mjs').then(r => r.default || r),
-"md": () => import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/langs/dist/markdown.mjs').then(r => r.default || r),
-"yaml": () => import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/langs/dist/yaml.mjs').then(r => r.default || r),
-"yml": () => import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/langs/dist/yaml.mjs').then(r => r.default || r),
-"python": () => import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/langs/dist/python.mjs').then(r => r.default || r),
-"py": () => import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/langs/dist/python.mjs').then(r => r.default || r),
+"javascript": () => import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/langs/dist/javascript.mjs').then(r => r.default || r),
+"js": () => import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/langs/dist/javascript.mjs').then(r => r.default || r),
+"cjs": () => import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/langs/dist/javascript.mjs').then(r => r.default || r),
+"mjs": () => import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/langs/dist/javascript.mjs').then(r => r.default || r),
+"typescript": () => import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/langs/dist/typescript.mjs').then(r => r.default || r),
+"ts": () => import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/langs/dist/typescript.mjs').then(r => r.default || r),
+"cts": () => import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/langs/dist/typescript.mjs').then(r => r.default || r),
+"mts": () => import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/langs/dist/typescript.mjs').then(r => r.default || r),
+"vue": () => import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/langs/dist/vue.mjs').then(r => r.default || r),
+"jsx": () => import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/langs/dist/jsx.mjs').then(r => r.default || r),
+"tsx": () => import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/langs/dist/tsx.mjs').then(r => r.default || r),
+"html": () => import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/langs/dist/html.mjs').then(r => r.default || r),
+"css": () => import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/langs/dist/css.mjs').then(r => r.default || r),
+"json": () => import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/langs/dist/json.mjs').then(r => r.default || r),
+"shellscript": () => import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/langs/dist/shellscript.mjs').then(r => r.default || r),
+"bash": () => import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/langs/dist/shellscript.mjs').then(r => r.default || r),
+"sh": () => import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/langs/dist/shellscript.mjs').then(r => r.default || r),
+"shell": () => import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/langs/dist/shellscript.mjs').then(r => r.default || r),
+"zsh": () => import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/langs/dist/shellscript.mjs').then(r => r.default || r),
+"markdown": () => import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/langs/dist/markdown.mjs').then(r => r.default || r),
+"md": () => import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/langs/dist/markdown.mjs').then(r => r.default || r),
+"yaml": () => import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/langs/dist/yaml.mjs').then(r => r.default || r),
+"yml": () => import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/langs/dist/yaml.mjs').then(r => r.default || r),
+"python": () => import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/langs/dist/python.mjs').then(r => r.default || r),
+"py": () => import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/langs/dist/python.mjs').then(r => r.default || r),
 };
 const bundledThemes = {
-"material-theme-lighter": () => import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/themes/dist/material-theme-lighter.mjs').then(r => r.default || r),
-"github-light": () => import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/themes/dist/github-light.mjs').then(r => r.default || r),
-"github-dark": () => import('file:///home/nanstis/test/docs-app/node_modules/@shikijs/themes/dist/github-dark.mjs').then(r => r.default || r),
+"material-theme-lighter": () => import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/themes/dist/material-theme-lighter.mjs').then(r => r.default || r),
+"github-light": () => import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/themes/dist/github-light.mjs').then(r => r.default || r),
+"github-dark": () => import('file:///home/nanstis/pages/docs-app/node_modules/@shikijs/themes/dist/github-dark.mjs').then(r => r.default || r),
 };
 const options = {};
-const engine = createOnigurumaEngine(() => import('file:///home/nanstis/test/docs-app/node_modules/shiki/dist/wasm.mjs'));
+const engine = createOnigurumaEngine(() => import('file:///home/nanstis/pages/docs-app/node_modules/shiki/dist/wasm.mjs'));
 const highlighter = createShikiHighlighter({ bundledLangs, bundledThemes, options, getMdcConfigs, engine });
 
 const mdcHighlighter = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
