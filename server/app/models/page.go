@@ -10,7 +10,7 @@ type Page struct {
 	bun.BaseModel `bun:"table:pages,alias:p"`
 
 	Id        int64     `bun:",pk,autoincrement" json:"id"`
-	Slug      string    `bun:"slug,notnull,unique" json:"slug"`
+	Slug      string    `bun:"slug,notnull" json:"slug"`
 	Title     string    `bun:"title,notnull" json:"title"`
 	Content   string    `bun:"content" json:"content"`
 	Excerpt   string    `bun:"excerpt" json:"excerpt,omitempty"`

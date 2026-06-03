@@ -19,14 +19,18 @@ type GetOneBySlug struct {
 	Slug string `json:"slug"`
 }
 
+type GetOneById struct {
+	Id int64 `json:"id"`
+}
+
 func NewPageHandler(db *bun.DB) *PageController {
 	return &PageController{handler: handlers.NewPageHandler(db)}
 }
 
 func (c PageController) GetOne(w http.ResponseWriter, req bunrouter.Request) error {
 	return utils.Response(w, func() (*models.Page, error) {
-		data := utils.GetParams[GetOneBySlug](w, req)
-		return c.handler.GetOneBySlug(data.Slug)
+		data := utils.GetParams[GetOneById](w, req)
+		return c.handler.GetOne(data.Id)
 	})
 }
 
@@ -49,5 +53,19 @@ func (c PageController) Update(w http.ResponseWriter, req bunrouter.Request) err
 		data := utils.GetBody[models.Page](w, req)
 		fmt.Println(data)
 		return c.handler.Update(data)
+	})
+}
+
+func (c PageController) GetById(w http.ResponseWriter, req bunrouter.Request) error {
+	return utils.Response(w, func() (*models.Page, error) {
+		data := utils.GetParams[GetOneById](w, req)
+		return c.handler.GetOne(data.Id)
+	})
+}
+
+func (c PageController) Delete(w http.ResponseWriter, req bunrouter.Request) error {
+	return utils.Response(w, func() (*models.Page, error) {
+		data := utils.GetParams[GetOneById](w, req)
+		return nil, c.handler.Delete(data.Id)
 	})
 }

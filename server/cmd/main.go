@@ -41,7 +41,7 @@ func main() {
 	))
 
 	db := bun.NewDB(conn, pgdialect.New())
-	db.WithQueryHook(bundebug.NewQueryHook(
+	db.AddQueryHook(bundebug.NewQueryHook(
 		bundebug.WithEnabled(true),
 		bundebug.WithVerbose(true),
 	))
@@ -84,8 +84,9 @@ func main() {
 
 	router.GET("/pages", pageHandler.GetAll)
 	router.POST("/page", pageHandler.Create)
-	router.GET("/page/:slug", pageHandler.GetOne)
-	router.PUT("/page/:slug", pageHandler.Update)
+	router.GET("/page/:id", pageHandler.GetOne)
+	router.PUT("/page/:id", pageHandler.Update)
+	router.DELETE("/page/:id", pageHandler.Delete)
 
 	httpServer := &http.Server{
 		Addr:         "localhost:1000",
