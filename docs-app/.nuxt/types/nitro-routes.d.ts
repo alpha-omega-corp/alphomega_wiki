@@ -12,6 +12,15 @@ declare module "nitropack/types" {
     '/api/auth/session': {
       'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/auth/session.get').default>>>>
     }
+    '/api/favorite': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/favorite.post').default>>>>
+    }
+    '/api/favorite/:id': {
+      'delete': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/favorite/[id].delete').default>>>>
+    }
+    '/api/favorites': {
+      'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/favorites.get').default>>>>
+    }
     '/api/icons/lucide': {
       'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/icons/lucide.get').default>>>>
     }

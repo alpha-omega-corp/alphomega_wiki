@@ -1,9 +1,0 @@
-{
-  "pid": 76001,
-  "startedAt": 1780585679340,
-  "command": "dev",
-  "cwd": "/home/nanstis/pages/docs-app",
-  "port": 3201,
-  "hostname": "127.0.0.1",
-  "url": "http://127.0.0.1:3201"
-}

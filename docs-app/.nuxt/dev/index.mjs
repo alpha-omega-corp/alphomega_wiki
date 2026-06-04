@@ -1101,13 +1101,13 @@ const _inlineRuntimeConfig = {
     }
   },
   "oauth": {
-    "issuer": "http://localhost:8093",
-    "clientId": "devdocs-test",
-    "clientSecret": "devdocs-secret",
-    "redirectUri": "http://localhost:3201/callback"
+    "issuer": "http://localhost:8080",
+    "clientId": "demo-client",
+    "clientSecret": "demo-secret",
+    "redirectUri": "http://localhost:3000/callback"
   },
   "session": {
-    "password": "test-session-password-at-least-32-chars-long"
+    "password": "dev-only-insecure-session-password-change-me!!"
   },
   "icon": {
     "serverKnownCssClasses": []
@@ -2651,22 +2651,7 @@ _meqpCVhGWe_c4D0pT6lYEKYCySpbCeV9vS0tu3sey8w,
 _wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw
 ];
 
-const assets = {
-  "/index.mjs": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"2ecc0-zyTkzG7NzAVljfx6/kDpVqeWamA\"",
-    "mtime": "2026-06-04T15:08:04.068Z",
-    "size": 191680,
-    "path": "index.mjs"
-  },
-  "/index.mjs.map": {
-    "type": "application/json",
-    "etag": "\"b1512-r+FwgmwtqD6y5VDa/zQWs72C6tY\"",
-    "mtime": "2026-06-04T15:08:04.068Z",
-    "size": 726290,
-    "path": "index.mjs.map"
-  }
-};
+const assets = {};
 
 function readAsset (id) {
   const serverDir = dirname$1(fileURLToPath(globalThis._importMeta_.url));
@@ -4498,6 +4483,9 @@ const _P1k2r4 = eventHandler(async (event) => {
 const _lazy_IheC22 = () => Promise.resolve().then(function () { return login_get$1; });
 const _lazy_GBWlMU = () => Promise.resolve().then(function () { return logout_post$1; });
 const _lazy_Qyjfrh = () => Promise.resolve().then(function () { return session_get$1; });
+const _lazy_ToYnO6 = () => Promise.resolve().then(function () { return favorite_post$1; });
+const _lazy_qrnirt = () => Promise.resolve().then(function () { return _id__delete$3; });
+const _lazy_w7QaFZ = () => Promise.resolve().then(function () { return favorites_get$1; });
 const _lazy_yHYN7c = () => Promise.resolve().then(function () { return lucide_get$1; });
 const _lazy_hdv0gF = () => Promise.resolve().then(function () { return _id__delete$1; });
 const _lazy_a4O6Cv = () => Promise.resolve().then(function () { return _id__put$1; });
@@ -4512,6 +4500,9 @@ const handlers = [
   { route: '/api/auth/login', handler: _lazy_IheC22, lazy: true, middleware: false, method: "get" },
   { route: '/api/auth/logout', handler: _lazy_GBWlMU, lazy: true, middleware: false, method: "post" },
   { route: '/api/auth/session', handler: _lazy_Qyjfrh, lazy: true, middleware: false, method: "get" },
+  { route: '/api/favorite', handler: _lazy_ToYnO6, lazy: true, middleware: false, method: "post" },
+  { route: '/api/favorite/:id', handler: _lazy_qrnirt, lazy: true, middleware: false, method: "delete" },
+  { route: '/api/favorites', handler: _lazy_w7QaFZ, lazy: true, middleware: false, method: "get" },
   { route: '/api/icons/lucide', handler: _lazy_yHYN7c, lazy: true, middleware: false, method: "get" },
   { route: '/api/page/:id', handler: _lazy_hdv0gF, lazy: true, middleware: false, method: "delete" },
   { route: '/api/page/:id', handler: _lazy_a4O6Cv, lazy: true, middleware: false, method: "put" },
@@ -4978,6 +4969,47 @@ const session_get = defineEventHandler(async (event) => {
 const session_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,
   default: session_get
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const favorite_post = defineEventHandler(async (event) => {
+  const { accessToken } = await requireAuth(event);
+  const body = await readBody(event);
+  return $fetch("http://localhost:1000/favorite", {
+    method: "POST",
+    body,
+    headers: bearer(accessToken)
+  });
+});
+
+const favorite_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: favorite_post
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const _id__delete$2 = defineEventHandler(async (event) => {
+  const { accessToken } = await requireAuth(event);
+  const id = getRouterParam(event, "id");
+  return $fetch(`http://localhost:1000/favorite/${id}`, {
+    method: "DELETE",
+    headers: bearer(accessToken)
+  });
+});
+
+const _id__delete$3 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: _id__delete$2
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const favorites_get = defineEventHandler(async (event) => {
+  const { accessToken } = await requireAuth(event);
+  return $fetch("http://localhost:1000/favorites", {
+    headers: bearer(accessToken)
+  });
+});
+
+const favorites_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: favorites_get
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const names = Object.keys(icons.icons).sort();

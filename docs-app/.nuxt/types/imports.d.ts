@@ -49,6 +49,7 @@ declare global {
   const isShallow: typeof import('vue').isShallow
   const isVue2: typeof import('../../node_modules/nuxt/dist/app/compat/vue-demi').isVue2
   const isVue3: typeof import('../../node_modules/nuxt/dist/app/compat/vue-demi').isVue3
+  const loadFavorites: typeof import('../../composables/useFavorites').loadFavorites
   const loadPayload: typeof import('../../node_modules/nuxt/dist/app/composables/payload').loadPayload
   const markRaw: typeof import('vue').markRaw
   const navigateTo: typeof import('../../node_modules/nuxt/dist/app/composables/router').navigateTo
@@ -119,6 +120,7 @@ declare global {
   const useCssModule: typeof import('vue').useCssModule
   const useCssVars: typeof import('vue').useCssVars
   const useError: typeof import('../../node_modules/nuxt/dist/app/composables/error').useError
+  const useFavorites: typeof import('../../composables/useFavorites').useFavorites
   const useFetch: typeof import('../../node_modules/nuxt/dist/app/composables/fetch').useFetch
   const useFileUpload: typeof import('../../node_modules/@nuxt/ui/dist/runtime/composables/useFileUpload').useFileUpload
   const useFormField: typeof import('../../node_modules/@nuxt/ui/dist/runtime/composables/useFormField').useFormField
@@ -222,6 +224,9 @@ declare global {
   // @ts-ignore
   export type { DropPosition, PageDnd } from '../../composables/pageDnd'
   import('../../composables/pageDnd')
+  // @ts-ignore
+  export type { Favorite } from '../../composables/useFavorites'
+  import('../../composables/useFavorites')
 }
 // for vue template auto import
 import { UnwrapRef } from 'vue'
@@ -275,6 +280,7 @@ declare module 'vue' {
     readonly isShallow: UnwrapRef<typeof import('vue')['isShallow']>
     readonly isVue2: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/compat/vue-demi')['isVue2']>
     readonly isVue3: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/compat/vue-demi')['isVue3']>
+    readonly loadFavorites: UnwrapRef<typeof import('../../composables/useFavorites')['loadFavorites']>
     readonly loadPayload: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/payload')['loadPayload']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
     readonly navigateTo: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/router')['navigateTo']>
@@ -345,6 +351,7 @@ declare module 'vue' {
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
     readonly useError: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/error')['useError']>
+    readonly useFavorites: UnwrapRef<typeof import('../../composables/useFavorites')['useFavorites']>
     readonly useFetch: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/composables/fetch')['useFetch']>
     readonly useFileUpload: UnwrapRef<typeof import('../../node_modules/@nuxt/ui/dist/runtime/composables/useFileUpload')['useFileUpload']>
     readonly useFormField: UnwrapRef<typeof import('../../node_modules/@nuxt/ui/dist/runtime/composables/useFormField')['useFormField']>

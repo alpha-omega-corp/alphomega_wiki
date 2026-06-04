@@ -40,7 +40,7 @@
             <span
                 v-if="page.icon"
                 class="flex size-5 shrink-0 cursor-pointer items-center justify-center"
-                title="Change icon"
+                title="Icon"
                 @click.stop.prevent
             >
               <UIcon v-if="isIcon(page.icon)" :name="page.icon" class="size-4 text-gray-500 dark:text-gray-400"/>
@@ -113,7 +113,7 @@
 <script setup lang="ts">
 import type {Page} from "~/types/page";
 import type {ContextMenuItem} from "@nuxt/ui";
-import {PageDndKey, type DropPosition} from "~/composables/pageDnd";
+import {type DropPosition, PageDndKey} from "~/composables/pageDnd";
 
 const props = withDefaults(defineProps<{ page: Page; basePath?: string }>(), {
   basePath: '',
@@ -131,6 +131,9 @@ const toast = useToast()
 // Editing actions are gated behind login (the server enforces this too).
 const {loggedIn} = useAuth()
 
+// Favorites are per-user (scoped to the authenticated user server-side).
+const {isFavorite, toggle: toggleFavorite} = useFavorites()
+
 // Context-menu actions for this page (rendered as ContextMenuItems). Export is
 // a read-only, client-side action so it stays available when logged out.
 const menuItems = computed<ContextMenuItem[][]>(() => {
@@ -140,15 +143,26 @@ const menuItems = computed<ContextMenuItem[][]>(() => {
     onSelect: () => exportMarkdown(),
   }
   if (!loggedIn.value) return [[exportItem]]
+  const favorited = isFavorite(props.page.id)
   return [
     [
       {label: 'Create Page', icon: 'i-lucide-file-plus', onSelect: () => emit('create', props.page.id)},
+    ],
+
+    [
       {label: 'Rename', icon: 'i-lucide-pencil', onSelect: () => startRename()},
       {label: 'Change Icon', icon: 'i-lucide-image', onSelect: () => openIconPicker()},
       exportItem,
     ],
     [
       {label: 'Delete', icon: 'i-lucide-trash-2', color: 'error', onSelect: () => deletePage()},
+    ],
+    [
+      {
+        label: favorited ? 'Remove from Favorites' : 'Add to Favorites',
+        icon: favorited ? 'i-lucide-star-off' : 'i-lucide-star',
+        onSelect: () => toggleFavorite(props.page),
+      },
     ],
   ]
 })

@@ -1,6 +1,49 @@
 <template>
   <nav class="flex-shrink-0 p-5 h-full overflow-y-auto">
 
+    <!-- The current user's favorited pages, resolved to their slug paths. -->
+    <div v-if="favoritePages.length" class="mb-4">
+      <p class="px-2 mb-1 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+        Favorites
+      </p>
+      <ul class="space-y-0.5">
+        <li
+            v-for="fav in favoritePages"
+            :key="fav.page.id"
+            class="group flex items-center gap-0.5 rounded-md"
+        >
+          <NuxtLink
+              :to="`/docs/${fav.slug}`"
+              class="flex flex-1 items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors min-w-0"
+              :class="route.path === `/docs/${fav.slug}`
+                ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 font-medium'
+                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800'"
+          >
+            <span class="flex size-4 shrink-0 items-center justify-center">
+              <UIcon
+                  v-if="fav.page.icon && isIcon(fav.page.icon)"
+                  :name="fav.page.icon"
+                  class="size-4 text-gray-500 dark:text-gray-400"
+              />
+              <span v-else-if="fav.page.icon" class="text-sm leading-none">{{ fav.page.icon }}</span>
+              <UIcon v-else name="i-lucide-star" class="size-4 text-amber-400"/>
+            </span>
+            <span class="truncate">{{ fav.page.title }}</span>
+          </NuxtLink>
+
+          <UButton
+              icon="i-lucide-star-off"
+              size="xs"
+              variant="ghost"
+              color="neutral"
+              class="shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
+              aria-label="Remove from favorites"
+              @click="toggleFavorite(fav.page)"
+          />
+        </li>
+      </ul>
+    </div>
+
     <UContentSearchButton :collapsed="false" class="mb-4 w-full"/>
 
     <ul class="space-y-0.5">
@@ -27,6 +70,39 @@ const {data: pages, status} = await useAsyncData(
     'pages',
     () => $fetch<Page[]>('/api/pages')
 )
+
+// Load the current user's favorites once here (PageList owns the tree); every
+// PageItem then reads the shared 'favorites' cache via useFavorites().
+loadFavorites()
+
+const route = useRoute()
+const {favorites, toggle: toggleFavorite} = useFavorites()
+
+function isIcon(value: string) {
+  return /^i-[a-z0-9]+[:-]/.test(value) || value.includes(':')
+}
+
+// Locate a page in the tree and build its full slug path (including ancestors).
+function findWithSlug(siblings: Page[], id: number, base = ''): { page: Page; slug: string } | null {
+  for (const node of siblings) {
+    const slug = base ? `${base}/${node.slug}` : node.slug
+    if (node.id === id) return {page: node, slug}
+    if (node.pages?.length) {
+      const found = findWithSlug(node.pages, id, slug)
+      if (found) return found
+    }
+  }
+  return null
+}
+
+// Favorited pages resolved to tree nodes + slug paths, in backend order (newest
+// first). Skips any favorite whose page no longer exists in the tree.
+const favoritePages = computed(() => {
+  const roots = pages.value ?? []
+  return favorites.value
+      .map(f => findWithSlug(roots, f.page_id))
+      .filter((x): x is { page: Page; slug: string } => x !== null)
+})
 
 const createPageModal = ref(false)
 const selectedParentId = ref<number | null>(null)
