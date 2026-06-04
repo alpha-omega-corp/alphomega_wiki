@@ -1,7 +1,24 @@
 <template>
   <li>
     <UContextMenu :items="menuItems">
-      <div class="flex items-center gap-0.5 group">
+      <div
+          ref="rowRef"
+          class="relative flex items-center gap-0.5 group rounded-md transition-colors"
+          :class="{
+            'opacity-50': isDragging,
+            'bg-primary-50 dark:bg-primary-900/20 ring-1 ring-primary-400 ring-inset': dropPos === 'inside',
+          }"
+          :draggable="!renaming && loggedIn"
+          @dragstart.stop="onDragStart"
+          @dragend="onDragEnd"
+          @dragover.prevent="onDragOver"
+          @dragleave="onDragLeave"
+          @drop.prevent="onDrop"
+      >
+        <!-- Sibling drop indicators (a line above / below the row). -->
+        <div v-if="dropPos === 'before'" class="absolute -top-px left-6 right-1 h-0.5 rounded-full bg-primary-500"/>
+        <div v-if="dropPos === 'after'" class="absolute -bottom-px left-6 right-1 h-0.5 rounded-full bg-primary-500"/>
+
         <UButton
             v-if="hasChildren"
             :icon="open ? 'i-lucide-chevron-down' : 'i-lucide-chevron-right'"
@@ -12,6 +29,26 @@
             @click="open = !open"
         />
         <span v-else class="size-6 shrink-0"/>
+
+        <!-- Page icon doubles as the icon-picker trigger; also opened via the context menu. -->
+        <IconPicker
+            v-model:open="iconPickerOpen"
+            :model-value="page.icon ?? ''"
+            @update:model-value="onIconSelect"
+        >
+          <template #trigger>
+            <span
+                v-if="page.icon"
+                class="flex size-5 shrink-0 cursor-pointer items-center justify-center"
+                title="Change icon"
+                @click.stop.prevent
+            >
+              <UIcon v-if="isIcon(page.icon)" :name="page.icon" class="size-4 text-gray-500 dark:text-gray-400"/>
+              <span v-else class="text-sm leading-none">{{ page.icon }}</span>
+            </span>
+            <span v-else class="block w-0" aria-hidden="true"/>
+          </template>
+        </IconPicker>
 
         <UInput
             v-if="renaming"
@@ -26,6 +63,7 @@
         <NuxtLink
             v-else
             :to="`/docs/${fullSlug}`"
+            draggable="false"
             class="flex flex-1 items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors min-w-0"
             :class="isActive
             ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 font-medium'
@@ -35,6 +73,7 @@
         </NuxtLink>
 
         <UButton
+            v-if="loggedIn"
             icon="i-lucide-plus"
             size="xs"
             variant="ghost"
@@ -74,6 +113,7 @@
 <script setup lang="ts">
 import type {Page} from "~/types/page";
 import type {ContextMenuItem} from "@nuxt/ui";
+import {PageDndKey, type DropPosition} from "~/composables/pageDnd";
 
 const props = withDefaults(defineProps<{ page: Page; basePath?: string }>(), {
   basePath: '',
@@ -88,34 +128,63 @@ const fullSlug = computed(() =>
 const route = useRoute()
 const toast = useToast()
 
-// Context-menu actions for this page (rendered as ContextMenuItems).
-const menuItems = computed<ContextMenuItem[][]>(() => [
-  [
-    {
-      label: 'Create Page',
-      icon: 'i-lucide-file-plus',
-      onSelect: () => emit('create', props.page.id),
-    },
-    {
-      label: 'Rename',
-      icon: 'i-lucide-pencil',
-      onSelect: () => startRename(),
-    },
-    {
-      label: 'Export',
-      icon: 'i-lucide-download',
-      onSelect: () => exportMarkdown(),
-    },
-  ],
-  [
-    {
-      label: 'Delete',
-      icon: 'i-lucide-trash-2',
+// Editing actions are gated behind login (the server enforces this too).
+const {loggedIn} = useAuth()
+
+// Context-menu actions for this page (rendered as ContextMenuItems). Export is
+// a read-only, client-side action so it stays available when logged out.
+const menuItems = computed<ContextMenuItem[][]>(() => {
+  const exportItem: ContextMenuItem = {
+    label: 'Export',
+    icon: 'i-lucide-download',
+    onSelect: () => exportMarkdown(),
+  }
+  if (!loggedIn.value) return [[exportItem]]
+  return [
+    [
+      {label: 'Create Page', icon: 'i-lucide-file-plus', onSelect: () => emit('create', props.page.id)},
+      {label: 'Rename', icon: 'i-lucide-pencil', onSelect: () => startRename()},
+      {label: 'Change Icon', icon: 'i-lucide-image', onSelect: () => openIconPicker()},
+      exportItem,
+    ],
+    [
+      {label: 'Delete', icon: 'i-lucide-trash-2', color: 'error', onSelect: () => deletePage()},
+    ],
+  ]
+})
+
+// --- Icon -----------------------------------------------------------------
+const iconPickerOpen = ref(false)
+
+function isIcon(value: string) {
+  return /^i-[a-z0-9]+[:-]/.test(value) || value.includes(':')
+}
+
+// Open the icon-selection modal (deferred a tick so it doesn't clash with the
+// closing context menu's focus handling).
+async function openIconPicker() {
+  await nextTick()
+  iconPickerOpen.value = true
+}
+
+// Persist the chosen icon (empty string clears it). Updates the tree node
+// optimistically so it renders immediately, then re-syncs with the server.
+async function onIconSelect(icon: string) {
+  const previous = props.page.icon
+  props.page.icon = icon
+  try {
+    await $fetch(`/api/page/${props.page.id}`, {method: 'PUT', body: {icon}})
+    await refreshNuxtData('pages')
+  } catch (e: any) {
+    props.page.icon = previous
+    toast.add({
+      title: 'Could not update icon',
+      description: e?.data?.message ?? e?.message ?? 'Failed to set the page icon.',
       color: 'error',
-      onSelect: () => deletePage(),
-    },
-  ],
-])
+      icon: 'i-lucide-triangle-alert',
+    })
+  }
+}
 
 // UContextMenu opens on right-click; the three-dots button is a left click, so
 // synthesize a contextmenu event on it to open the menu at the button.
@@ -244,4 +313,53 @@ const isActiveSubtree = computed(() => pageInSubtree(props.page, props.basePath,
 watchEffect(() => {
   if (isActiveSubtree.value) open.value = true
 })
+
+// --- Drag & drop -----------------------------------------------------------
+const dnd = inject(PageDndKey)!
+const rowRef = ref<HTMLElement>()
+// Where a drop would land on *this* row, used to render the indicator.
+const dropPos = ref<DropPosition | null>(null)
+const isDragging = computed(() => dnd.draggingId.value === props.page.id)
+
+function onDragStart(event: DragEvent) {
+  if (event.dataTransfer) {
+    event.dataTransfer.setData('text/plain', String(props.page.id))
+    event.dataTransfer.effectAllowed = 'move'
+  }
+  dnd.start(props.page.id)
+}
+
+function onDragEnd() {
+  dnd.end()
+  dropPos.value = null
+}
+
+// Top quarter → drop before (sibling), bottom quarter → after (sibling),
+// middle → inside (nest as a child).
+function onDragOver(event: DragEvent) {
+  const id = dnd.draggingId.value
+  if (id === null || id === props.page.id) return
+  if (event.dataTransfer) event.dataTransfer.dropEffect = 'move'
+
+  const el = rowRef.value
+  if (!el) return
+  const rect = el.getBoundingClientRect()
+  const ratio = (event.clientY - rect.top) / rect.height
+  dropPos.value = ratio < 0.25 ? 'before' : ratio > 0.75 ? 'after' : 'inside'
+}
+
+function onDragLeave(event: DragEvent) {
+  // Ignore leave events fired while moving onto our own child elements.
+  const el = rowRef.value
+  if (el && event.relatedTarget instanceof Node && el.contains(event.relatedTarget)) return
+  dropPos.value = null
+}
+
+async function onDrop() {
+  const pos = dropPos.value
+  const id = dnd.draggingId.value
+  dropPos.value = null
+  if (!pos || id === null || id === props.page.id) return
+  await dnd.move(id, props.page.id, pos)
+}
 </script>

@@ -14,7 +14,10 @@ type HydrationStrategies = {
 type LazyComponent<T> = DefineComponent<HydrationStrategies, {}, {}, {}, {}, {}, {}, { hydrated: () => void }> & T
 
 interface _GlobalComponents {
+  WCard: typeof import("../../components/content/WCard.vue")['default']
+  AuthButton: typeof import("../../components/AuthButton.vue")['default']
   CreatePage: typeof import("../../components/CreatePage.vue")['default']
+  IconPicker: typeof import("../../components/IconPicker.vue")['default']
   Page: typeof import("../../components/Page.vue")['default']
   PageItem: typeof import("../../components/PageItem.vue")['default']
   PageList: typeof import("../../components/PageList.vue")['default']
@@ -23,6 +26,8 @@ interface _GlobalComponents {
   EditorImageUploadExtension: typeof import("../../components/editor/EditorImageUploadExtension")['default']
   EditorLinkPopover: typeof import("../../components/editor/EditorLinkPopover.vue")['default']
   EditorUseCompletion: typeof import("../../components/editor/EditorUseCompletion")['default']
+  EditorMdcCardExtension: typeof import("../../components/editor/MdcCardExtension")['default']
+  EditorMdcCardView: typeof import("../../components/editor/MdcCardView.vue")['default']
   ProseA: typeof import("../../node_modules/@nuxt/ui/dist/runtime/components/prose/A.vue")['default']
   ProseAccordion: typeof import("../../node_modules/@nuxt/ui/dist/runtime/components/prose/Accordion.vue")['default']
   ProseAccordionItem: typeof import("../../node_modules/@nuxt/ui/dist/runtime/components/prose/AccordionItem.vue")['default']
@@ -235,7 +240,10 @@ interface _GlobalComponents {
   MDCRenderer: typeof import("../../node_modules/@nuxtjs/mdc/dist/runtime/components/MDCRenderer.vue")['default']
   MDCSlot: typeof import("../../node_modules/@nuxtjs/mdc/dist/runtime/components/MDCSlot.vue")['default']
   NuxtIsland: typeof import("../../node_modules/nuxt/dist/app/components/nuxt-island")['default']
+  LazyWCard: LazyComponent<typeof import("../../components/content/WCard.vue")['default']>
+  LazyAuthButton: LazyComponent<typeof import("../../components/AuthButton.vue")['default']>
   LazyCreatePage: LazyComponent<typeof import("../../components/CreatePage.vue")['default']>
+  LazyIconPicker: LazyComponent<typeof import("../../components/IconPicker.vue")['default']>
   LazyPage: LazyComponent<typeof import("../../components/Page.vue")['default']>
   LazyPageItem: LazyComponent<typeof import("../../components/PageItem.vue")['default']>
   LazyPageList: LazyComponent<typeof import("../../components/PageList.vue")['default']>
@@ -244,6 +252,8 @@ interface _GlobalComponents {
   LazyEditorImageUploadExtension: LazyComponent<typeof import("../../components/editor/EditorImageUploadExtension")['default']>
   LazyEditorLinkPopover: LazyComponent<typeof import("../../components/editor/EditorLinkPopover.vue")['default']>
   LazyEditorUseCompletion: LazyComponent<typeof import("../../components/editor/EditorUseCompletion")['default']>
+  LazyEditorMdcCardExtension: LazyComponent<typeof import("../../components/editor/MdcCardExtension")['default']>
+  LazyEditorMdcCardView: LazyComponent<typeof import("../../components/editor/MdcCardView.vue")['default']>
   LazyProseA: LazyComponent<typeof import("../../node_modules/@nuxt/ui/dist/runtime/components/prose/A.vue")['default']>
   LazyProseAccordion: LazyComponent<typeof import("../../node_modules/@nuxt/ui/dist/runtime/components/prose/Accordion.vue")['default']>
   LazyProseAccordionItem: LazyComponent<typeof import("../../node_modules/@nuxt/ui/dist/runtime/components/prose/AccordionItem.vue")['default']>

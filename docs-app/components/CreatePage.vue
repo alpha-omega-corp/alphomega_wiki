@@ -42,11 +42,25 @@ watch(open, (value) => {
   }
 })
 
+// Walk the tree to build a page's full slug path (ancestors + own slug), since
+// the create response only carries the page's own slug.
+function findSlugPath(list: Page[], id: number, base = ''): string | undefined {
+  for (const page of list) {
+    const full = base ? `${base}/${page.slug}` : page.slug
+    if (page.id === id) return full
+    if (page.pages?.length) {
+      const found = findSlugPath(page.pages, id, full)
+      if (found) return found
+    }
+  }
+  return undefined
+}
+
 async function create() {
   if (!title.value.trim()) return
   submitting.value = true
   try {
-    await $fetch<Page>('/api/pages', {
+    const page = await $fetch<Page>('/api/pages', {
       method: 'POST',
       body: {
         title: title.value.trim(),
@@ -57,6 +71,19 @@ async function create() {
     // Refresh the shared 'pages' tree so the sidebar shows the new page.
     await refreshNuxtData('pages')
     open.value = false
+
+    // Redirect to the freshly created page (resolving its full nested path from
+    // the refreshed tree; falls back to the bare slug for a top-level page).
+    const tree = useNuxtData<Page[]>('pages').data.value ?? []
+    await navigateTo(`/docs/${findSlugPath(tree, page.id) ?? page.slug}`)
+  } catch (err) {
+    const e = err as { statusCode?: number; statusMessage?: string; data?: { message?: string }; message?: string }
+    useToast().add({
+      title: e.statusCode === 401 ? 'Sign in to create pages' : 'Could not create page',
+      description: e.statusMessage || e.data?.message || e.message,
+      color: 'error',
+      icon: 'i-lucide-triangle-alert',
+    })
   } finally {
     submitting.value = false
   }
@@ -64,7 +91,7 @@ async function create() {
 </script>
 
 <template>
-  <UModal v-model:open="open" title="New page">
+  <UModal v-model:open="open" title="Create Page">
     <template #body>
       <UForm :state="{title, slug}" class="space-y-4" @submit="create">
         <UFormField label="Title" name="title" required>

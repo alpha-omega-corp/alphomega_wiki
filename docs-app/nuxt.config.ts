@@ -28,6 +28,25 @@ export default defineNuxtConfig({
 
   devtools: { enabled: true },
 
+  // OAuth login against the AOAuth server. Secrets stay server-side; only
+  // `public` is exposed to the browser.
+  runtimeConfig: {
+    oauth: {
+      issuer: process.env.AOAUTH_ISSUER || 'http://localhost:8080',
+      clientId: process.env.AOAUTH_CLIENT_ID || 'demo-client',
+      clientSecret: process.env.AOAUTH_CLIENT_SECRET || 'demo-secret',
+      redirectUri: process.env.AOAUTH_REDIRECT_URI || 'http://localhost:3000/callback',
+    },
+    session: {
+      // Seals the session cookie. MUST be >= 32 chars; override in production.
+      password: process.env.AUTH_SESSION_PASSWORD || 'dev-only-insecure-session-password-change-me!!',
+    },
+    public: {
+      // When true, every page requires authentication (middleware/auth.global.ts).
+      authRequired: process.env.AUTH_REQUIRED === 'true',
+    },
+  },
+
   content: {
     experimental: {
       sqliteConnector: 'native',

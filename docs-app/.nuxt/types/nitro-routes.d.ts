@@ -3,16 +3,29 @@ import type { Serialize, Simplify } from "nitropack/types";
 declare module "nitropack/types" {
   type Awaited<T> = T extends PromiseLike<infer U> ? Awaited<U> : T
   interface InternalApi {
+    '/api/auth/login': {
+      'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/auth/login.get').default>>>>
+    }
+    '/api/auth/logout': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/auth/logout.post').default>>>>
+    }
+    '/api/auth/session': {
+      'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/auth/session.get').default>>>>
+    }
+    '/api/icons/lucide': {
+      'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/icons/lucide.get').default>>>>
+    }
     '/api/page/:id': {
       'delete': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/page/[id].delete').default>>>>
+      'put': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/page/[id].put').default>>>>
       'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/page/[id]').default>>>>
-    }
-    '/api/page/:slug': {
-      'put': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/page/[slug].put').default>>>>
     }
     '/api/pages': {
       'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/pages.post').default>>>>
       'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/pages').default>>>>
+    }
+    '/callback': {
+      'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/routes/callback.get').default>>>>
     }
     '/__nuxt_error': {
       'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/@nuxt/nitro-server/dist/runtime/handlers/renderer').default>>>>

@@ -10,6 +10,20 @@ import { RuntimeConfig as UserRuntimeConfig, PublicRuntimeConfig as UserPublicRu
       cdnURL: string,
    },
 
+   oauth: {
+      issuer: string,
+
+      clientId: string,
+
+      clientSecret: string,
+
+      redirectUri: string,
+   },
+
+   session: {
+      password: string,
+   },
+
    nitro: {
       envPrefix: string,
    },
@@ -39,6 +53,8 @@ import { RuntimeConfig as UserRuntimeConfig, PublicRuntimeConfig as UserPublicRu
    },
   }
   interface SharedPublicRuntimeConfig {
+   authRequired: boolean,
+
    mdc: {
       components: {
          prose: boolean,

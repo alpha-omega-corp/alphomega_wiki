@@ -29,16 +29,20 @@ const { data: pages } = await useAsyncData(
 // searchable leaf (titles/content are matched by the command palette).
 type SearchFile = { id: string; title: string; titles: string[]; level: number; content: string }
 
-function flatten(items: Page[], acc: SearchFile[] = []): SearchFile[] {
+// `basePath`/`titles` accumulate the ancestor chain so nested pages get their
+// full slug path (e.g. `parent/child`) — the tree nodes only carry their own
+// slug segment, so a bare `/docs/${page.slug}` would point at the wrong URL.
+function flatten(items: Page[], basePath = '', titles: string[] = [], acc: SearchFile[] = []): SearchFile[] {
   for (const page of items) {
+    const fullSlug = basePath ? `${basePath}/${page.slug}` : page.slug
     acc.push({
-      id: `/docs/${page.slug}`,
+      id: `/docs/${fullSlug}`,
       title: page.title,
-      titles: [],
+      titles,
       level: 1,
       content: page.content ?? '',
     })
-    if (page.pages?.length) flatten(page.pages, acc)
+    if (page.pages?.length) flatten(page.pages, fullSlug, [...titles, page.title], acc)
   }
   return acc
 }

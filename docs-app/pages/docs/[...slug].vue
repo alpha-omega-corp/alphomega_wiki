@@ -48,20 +48,36 @@ useHead(computed(() => ({
 </script>
 
 <template>
-  <div>
-    <UContainer>
-      <div class="flex gap-10 py-10">
-        <!-- Sidebar -->
-        <PageList class="hidden lg:block"/>
 
-        <!-- Main content -->
-        <Page :page="page" :slug="slug"/>
+  <UPage :ui="{
+    root: 'lg:gap-0 h-full min-h-0 lg:grid-rows-1 mx-auto w-full max-w-[96rem]',
+    left: 'lg:col-span-3',
+    center: 'lg:col-span-5',
+  }">
+    <template #left>
+      <!-- Sidebar: separated by a hard border (no background). -->
+      <PageList
+          class="hidden lg:block lg:px-3 lg:border-r lg:border-gray-200 lg:dark:border-gray-800"
+      />
+    </template>
 
-        <!-- Table of Contents -->
-        <PageTocs :links="links"/>
+    <UPageBody class="mt-0 pb-0 h-full min-h-0">
+      <!-- Main content: a lighter surface than the rail (owns its own header +
+           scroll region). -->
+      <div
+          class="h-full min-h-0 flex flex-col overflow-hidden bg-white dark:bg-gray-950"
+      >
+        <!-- Content fills the column (no width cap); Page owns its own header,
+             padding and scroll region, so just bound the height here. -->
+        <div class="flex-1 min-h-0 w-full">
+          <Page :page="page" :slug="slug"/>
+        </div>
       </div>
-    </UContainer>
+    </UPageBody>
 
-
-  </div>
+    <template #right>
+      <!-- Table of Contents -->
+      <PageTocs :links="links"/>
+    </template>
+  </UPage>
 </template>

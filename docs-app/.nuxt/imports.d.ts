@@ -31,6 +31,8 @@ export { requestIdleCallback, cancelIdleCallback } from '#app/compat/idle-callba
 export { setInterval } from '#app/compat/interval';
 export { definePageMeta, PageMeta } from '#app/composables/pages';
 export { defineLazyHydrationComponent } from '#app/composables/lazy-hydration';
+export { PageDndKey, DropPosition, PageDnd } from '../composables/pageDnd';
+export { useAuth } from '../composables/useAuth';
 export { defineLocale, extendLocale } from '../node_modules/@nuxt/ui/dist/runtime/composables/defineLocale';
 export { defineShortcuts, extractShortcuts } from '../node_modules/@nuxt/ui/dist/runtime/composables/defineShortcuts';
 export { useContentSearch } from '../node_modules/@nuxt/ui/dist/runtime/composables/useContentSearch';

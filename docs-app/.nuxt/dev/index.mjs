@@ -1,8 +1,8 @@
 import process from 'node:process';globalThis._importMeta_={url:import.meta.url,env:process.env};import { tmpdir } from 'node:os';
-import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, createError, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, getResponseStatus, getQuery as getQuery$1, getRouterParam, setHeader, readBody, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatusText } from 'file:///home/nanstis/pages/docs-app/node_modules/h3/dist/index.mjs';
+import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, createError, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, getResponseStatus, useSession, getQuery as getQuery$1, getRouterParam, setHeader, readBody, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatusText } from 'file:///home/nanstis/pages/docs-app/node_modules/h3/dist/index.mjs';
 import { Server } from 'node:http';
 import { resolve, dirname, join } from 'node:path';
-import crypto$1 from 'node:crypto';
+import crypto$1, { randomBytes, createHash } from 'node:crypto';
 import { parentPort, threadId } from 'node:worker_threads';
 import { escapeHtml } from 'file:///home/nanstis/pages/docs-app/node_modules/@vue/shared/dist/shared.cjs.js';
 import _RemarkEmoji from 'file:///home/nanstis/pages/docs-app/node_modules/remark-emoji/index.js';
@@ -10,6 +10,7 @@ import { visit } from 'file:///home/nanstis/pages/docs-app/node_modules/unist-ut
 import { toString } from 'file:///home/nanstis/pages/docs-app/node_modules/hast-util-to-string/index.js';
 import viteNodeEntry_mjs from 'file:///home/nanstis/pages/docs-app/node_modules/@nuxt/vite-builder/dist/vite-node-entry.mjs';
 import { viteNodeFetch } from 'file:///home/nanstis/pages/docs-app/node_modules/@nuxt/vite-builder/dist/vite-node.mjs';
+import { icons } from 'file:///home/nanstis/pages/docs-app/node_modules/@iconify-json/lucide/index.mjs';
 import { bundledLanguages, bundledThemes as bundledThemes$1 } from 'file:///home/nanstis/pages/docs-app/node_modules/shiki/dist/index.mjs';
 import { unified } from 'file:///home/nanstis/pages/docs-app/node_modules/unified/index.js';
 import remarkParse from 'file:///home/nanstis/pages/docs-app/node_modules/remark-parse/index.js';
@@ -1028,6 +1029,7 @@ const _inlineRuntimeConfig = {
     }
   },
   "public": {
+    "authRequired": false,
     "mdc": {
       "components": {
         "prose": true,
@@ -1097,6 +1099,15 @@ const _inlineRuntimeConfig = {
     "content": {
       "wsUrl": ""
     }
+  },
+  "oauth": {
+    "issuer": "http://localhost:8093",
+    "clientId": "devdocs-test",
+    "clientSecret": "devdocs-secret",
+    "redirectUri": "http://localhost:3201/callback"
+  },
+  "session": {
+    "password": "test-session-password-at-least-32-chars-long"
   },
   "icon": {
     "serverKnownCssClasses": []
@@ -2643,16 +2654,16 @@ _wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw
 const assets = {
   "/index.mjs": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"2cccb-wxLvOPGeYFRyi/P66IoD0dp9jYI\"",
-    "mtime": "2026-06-03T16:57:58.698Z",
-    "size": 183499,
+    "etag": "\"2ecc0-zyTkzG7NzAVljfx6/kDpVqeWamA\"",
+    "mtime": "2026-06-04T15:08:04.068Z",
+    "size": 191680,
     "path": "index.mjs"
   },
   "/index.mjs.map": {
     "type": "application/json",
-    "etag": "\"aad2d-8BOjUfey3bUDkoCKCwTHCyj/Kp8\"",
-    "mtime": "2026-06-03T16:57:58.702Z",
-    "size": 699693,
+    "etag": "\"b1512-r+FwgmwtqD6y5VDa/zQWs72C6tY\"",
+    "mtime": "2026-06-04T15:08:04.068Z",
+    "size": 726290,
     "path": "index.mjs.map"
   }
 };
@@ -3677,6 +3688,66 @@ function contentHeading(body) {
   };
 }
 
+function oauthConfig() {
+  var _a;
+  const c = (_a = useRuntimeConfig().oauth) != null ? _a : {};
+  return {
+    issuer: process.env.AOAUTH_ISSUER || c.issuer || "http://localhost:8080",
+    clientId: process.env.AOAUTH_CLIENT_ID || c.clientId || "demo-client",
+    clientSecret: process.env.AOAUTH_CLIENT_SECRET || c.clientSecret || "demo-secret",
+    redirectUri: process.env.AOAUTH_REDIRECT_URI || c.redirectUri || "http://localhost:3000/callback"
+  };
+}
+function bearer(token) {
+  return token ? { Authorization: `Bearer ${token}` } : {};
+}
+async function refreshTokens(refreshToken) {
+  const oauth = oauthConfig();
+  return await $fetch(`${oauth.issuer}/token`, {
+    method: "POST",
+    headers: {
+      Authorization: "Basic " + Buffer.from(`${oauth.clientId}:${oauth.clientSecret}`).toString("base64")
+    },
+    body: new URLSearchParams({ grant_type: "refresh_token", refresh_token: refreshToken })
+  });
+}
+async function requireAuth(event) {
+  var _a;
+  const session = await authSession(event);
+  const data = session.data;
+  if (!data.user) {
+    throw createError({ statusCode: 401, statusMessage: "Authentication required" });
+  }
+  let accessToken = data.accessToken;
+  const expiringSoon = data.expiresAt !== void 0 && Date.now() > data.expiresAt - 3e4;
+  if (expiringSoon && data.refreshToken) {
+    const refreshed = await refreshTokens(data.refreshToken).catch(() => null);
+    if (!refreshed) {
+      await session.clear();
+      throw createError({ statusCode: 401, statusMessage: "Session expired, please sign in again" });
+    }
+    accessToken = refreshed.access_token;
+    await session.update({
+      accessToken: refreshed.access_token,
+      // AOAuth rotates refresh tokens — keep the new one.
+      refreshToken: (_a = refreshed.refresh_token) != null ? _a : data.refreshToken,
+      expiresAt: refreshed.expires_in ? Date.now() + refreshed.expires_in * 1e3 : void 0
+    });
+  }
+  return { user: data.user, accessToken };
+}
+function authSession(event) {
+  var _a;
+  const password = process.env.AUTH_SESSION_PASSWORD || ((_a = useRuntimeConfig().session) == null ? void 0 : _a.password);
+  return useSession(event, {
+    password,
+    name: "docs_session",
+    // sameSite=lax so the cookie survives the OAuth redirect; Secure in
+    // production, relaxed in dev so it works over http://localhost.
+    cookie: { sameSite: "lax", secure: false }
+  });
+}
+
 const warnOnceSet = /* @__PURE__ */ new Set();
 const DEFAULT_ENDPOINT = "https://api.iconify.design";
 function getInstallCommand(pkg) {
@@ -4424,20 +4495,30 @@ const _P1k2r4 = eventHandler(async (event) => {
   return loadDatabaseAdapter(conf).all(sql);
 });
 
+const _lazy_IheC22 = () => Promise.resolve().then(function () { return login_get$1; });
+const _lazy_GBWlMU = () => Promise.resolve().then(function () { return logout_post$1; });
+const _lazy_Qyjfrh = () => Promise.resolve().then(function () { return session_get$1; });
+const _lazy_yHYN7c = () => Promise.resolve().then(function () { return lucide_get$1; });
 const _lazy_hdv0gF = () => Promise.resolve().then(function () { return _id__delete$1; });
+const _lazy_a4O6Cv = () => Promise.resolve().then(function () { return _id__put$1; });
 const _lazy_Gr4FtT = () => Promise.resolve().then(function () { return _id_$1; });
-const _lazy_8XrxG2 = () => Promise.resolve().then(function () { return _slug__put$1; });
 const _lazy_odtoxZ = () => Promise.resolve().then(function () { return pages_post$1; });
 const _lazy_EXGpsv = () => Promise.resolve().then(function () { return pages$1; });
+const _lazy_1WXN_3 = () => Promise.resolve().then(function () { return callback_get$1; });
 const _lazy_2cSf3Q = () => Promise.resolve().then(function () { return renderer; });
 
 const handlers = [
   { route: '', handler: _mutNeE, lazy: false, middleware: true, method: undefined },
+  { route: '/api/auth/login', handler: _lazy_IheC22, lazy: true, middleware: false, method: "get" },
+  { route: '/api/auth/logout', handler: _lazy_GBWlMU, lazy: true, middleware: false, method: "post" },
+  { route: '/api/auth/session', handler: _lazy_Qyjfrh, lazy: true, middleware: false, method: "get" },
+  { route: '/api/icons/lucide', handler: _lazy_yHYN7c, lazy: true, middleware: false, method: "get" },
   { route: '/api/page/:id', handler: _lazy_hdv0gF, lazy: true, middleware: false, method: "delete" },
+  { route: '/api/page/:id', handler: _lazy_a4O6Cv, lazy: true, middleware: false, method: "put" },
   { route: '/api/page/:id', handler: _lazy_Gr4FtT, lazy: true, middleware: false, method: undefined },
-  { route: '/api/page/:slug', handler: _lazy_8XrxG2, lazy: true, middleware: false, method: "put" },
   { route: '/api/pages', handler: _lazy_odtoxZ, lazy: true, middleware: false, method: "post" },
   { route: '/api/pages', handler: _lazy_EXGpsv, lazy: true, middleware: false, method: undefined },
+  { route: '/callback', handler: _lazy_1WXN_3, lazy: true, middleware: false, method: "get" },
   { route: '/__nuxt_error', handler: _lazy_2cSf3Q, lazy: true, middleware: false, method: undefined },
   { route: '/api/_nuxt_icon/:collection', handler: _q0DggC, lazy: false, middleware: false, method: undefined },
   { route: '/__nuxt_content/docs/sql_dump.txt', handler: _RuxMWf, lazy: false, middleware: false, method: undefined },
@@ -4852,16 +4933,90 @@ const styles$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   default: styles
 }, Symbol.toStringTag, { value: 'Module' }));
 
+const login_get = defineEventHandler(async (event) => {
+  const oauth = oauthConfig();
+  const codeVerifier = randomBytes(32).toString("base64url");
+  const codeChallenge = createHash("sha256").update(codeVerifier).digest("base64url");
+  const state = randomBytes(16).toString("base64url");
+  const requested = String(getQuery$1(event).returnTo || "/");
+  const returnTo = requested.startsWith("/") ? requested : "/";
+  const session = await authSession(event);
+  await session.update({ state, codeVerifier, returnTo });
+  const url = new URL(`${oauth.issuer}/authorize`);
+  url.searchParams.set("response_type", "code");
+  url.searchParams.set("client_id", oauth.clientId);
+  url.searchParams.set("redirect_uri", oauth.redirectUri);
+  url.searchParams.set("scope", "openid profile email");
+  url.searchParams.set("state", state);
+  url.searchParams.set("code_challenge", codeChallenge);
+  url.searchParams.set("code_challenge_method", "S256");
+  return sendRedirect(event, url.toString());
+});
+
+const login_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: login_get
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const logout_post = defineEventHandler(async (event) => {
+  const session = await authSession(event);
+  await session.clear();
+  return { ok: true };
+});
+
+const logout_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: logout_post
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const session_get = defineEventHandler(async (event) => {
+  var _a;
+  const session = await authSession(event);
+  return { user: (_a = session.data.user) != null ? _a : null };
+});
+
+const session_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: session_get
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const names = Object.keys(icons.icons).sort();
+const lucide_get = defineEventHandler(() => names);
+
+const lucide_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: lucide_get
+}, Symbol.toStringTag, { value: 'Module' }));
+
 const _id__delete = defineEventHandler(async (event) => {
+  const { accessToken } = await requireAuth(event);
   const id = getRouterParam(event, "id");
   return $fetch(`http://localhost:1000/page/${id}`, {
-    method: "DELETE"
+    method: "DELETE",
+    headers: bearer(accessToken)
   });
 });
 
 const _id__delete$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,
   default: _id__delete
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const _id__put = defineEventHandler(async (event) => {
+  const { accessToken } = await requireAuth(event);
+  const id = getRouterParam(event, "id");
+  const body = await readBody(event);
+  const current = await $fetch(`http://localhost:1000/page/${id}`);
+  return $fetch(`http://localhost:1000/page/${id}`, {
+    method: "PUT",
+    body: { ...current, ...body },
+    headers: bearer(accessToken)
+  });
+});
+
+const _id__put$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: _id__put
 }, Symbol.toStringTag, { value: 'Module' }));
 
 function createShikiHighlighter$1({
@@ -5061,6 +5216,7 @@ const _id_ = defineEventHandler(async (event) => {
     }
   });
   return {
+    id: page.id,
     title: page.title,
     slug: page.slug,
     tags: page.tags,
@@ -5075,27 +5231,13 @@ const _id_$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   default: _id_
 }, Symbol.toStringTag, { value: 'Module' }));
 
-const _slug__put = defineEventHandler(async (event) => {
-  const slug = getRouterParam(event, "slug");
-  const body = await readBody(event);
-  const current = await $fetch(`http://localhost:1000/page/${slug}`);
-  return $fetch(`http://localhost:1000/page/${slug}`, {
-    method: "PUT",
-    body: { ...current, ...body }
-  });
-});
-
-const _slug__put$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-  __proto__: null,
-  default: _slug__put
-}, Symbol.toStringTag, { value: 'Module' }));
-
 const pages_post = defineEventHandler(async (event) => {
+  const { accessToken } = await requireAuth(event);
   const body = await readBody(event);
-  console.log(body);
   return $fetch("http://localhost:1000/page", {
     method: "POST",
-    body
+    body,
+    headers: bearer(accessToken)
   });
 });
 
@@ -5111,6 +5253,61 @@ const pages = defineEventHandler(() => {
 const pages$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,
   default: pages
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const callback_get = defineEventHandler(async (event) => {
+  const oauth = oauthConfig();
+  const query = getQuery$1(event);
+  const session = await authSession(event);
+  if (query.error) {
+    return sendRedirect(event, `/?auth_error=${encodeURIComponent(String(query.error))}`);
+  }
+  const code = String(query.code || "");
+  const state = String(query.state || "");
+  const { state: expectedState, codeVerifier, returnTo = "/" } = session.data;
+  if (!code || !state || !expectedState || state !== expectedState) {
+    return sendRedirect(event, "/?auth_error=invalid_state");
+  }
+  try {
+    const token = await $fetch(`${oauth.issuer}/token`, {
+      method: "POST",
+      headers: {
+        Authorization: "Basic " + Buffer.from(`${oauth.clientId}:${oauth.clientSecret}`).toString("base64")
+      },
+      body: new URLSearchParams({
+        grant_type: "authorization_code",
+        code,
+        redirect_uri: oauth.redirectUri,
+        code_verifier: codeVerifier || ""
+      })
+    });
+    const userinfo = await $fetch(`${oauth.issuer}/userinfo`, {
+      headers: { Authorization: `Bearer ${token.access_token}` }
+    }).catch(() => null);
+    await session.update({
+      user: {
+        sub: (userinfo == null ? void 0 : userinfo.sub) || "",
+        name: userinfo == null ? void 0 : userinfo.name,
+        email: userinfo == null ? void 0 : userinfo.email,
+        email_verified: userinfo == null ? void 0 : userinfo.email_verified
+      },
+      accessToken: token.access_token,
+      refreshToken: token.refresh_token,
+      expiresAt: token.expires_in ? Date.now() + token.expires_in * 1e3 : void 0,
+      // Clear the one-time flow values.
+      state: void 0,
+      codeVerifier: void 0,
+      returnTo: void 0
+    });
+    return sendRedirect(event, returnTo);
+  } catch {
+    return sendRedirect(event, "/?auth_error=token_exchange_failed");
+  }
+});
+
+const callback_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: callback_get
 }, Symbol.toStringTag, { value: 'Module' }));
 
 function renderPayloadResponse(ssrContext) {

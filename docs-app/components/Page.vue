@@ -1,16 +1,57 @@
 <script setup lang="ts">
+import type {BreadcrumbItem} from "@nuxt/ui";
 import type {Page} from "~/types/page";
+import WCard from "~/components/content/WCard.vue";
+
+// Render `::card` blocks with our component instead of Nuxt UI's default
+// ProseCard (passed components override the built-in prose map).
+const mdcComponents = {card: WCard}
 
 const props = defineProps<{
-  page?: Page,
+  page?: Page | null,
   slug: string,
 }>()
 
-const breadcrumbs = computed(() => [
-  {label: 'Home', to: '/', icon: 'i-heroicons-home'},
-  {label: 'Docs', to: '/docs/getting-started'},
-  {label: props.page?.title ?? props.slug},
-])
+// Editing is gated behind login (the server also enforces this on every
+// mutation). Logged-out users get a read-only view.
+const {loggedIn, login} = useAuth()
+const route = useRoute()
+
+// Shared page tree (fetched in PageList / app.vue) used to resolve each slug
+// segment to its page title + link.
+const {data: pageTree} = useNuxtData<Page[]>('pages')
+
+// Build a crumb per slug segment so nested pages show their full path, e.g.
+// Home › Authentication › SSO / OAuth — each ancestor linking to its own page.
+const breadcrumbs = computed<BreadcrumbItem[]>(() => {
+  const crumbs: BreadcrumbItem[] = [{label: 'Home', to: '/', icon: 'i-heroicons-home'}]
+
+  const segments = props.slug.split('/').filter(Boolean)
+  let level = pageTree.value ?? []
+  let path = ''
+
+  segments.forEach((segment, index) => {
+    path = path ? `${path}/${segment}` : segment
+    const match = level.find(p => p.slug === segment)
+    const isLast = index === segments.length - 1
+
+    crumbs.push({
+      // Prefer the page's real title; fall back to the live page prop for the
+      // current (last) crumb, then to the raw slug segment.
+      label: match?.title ?? (isLast ? props.page?.title : undefined) ?? segment,
+      // The current page is plain text (no link).
+      to: isLast ? undefined : `/docs/${path}`,
+    })
+
+    level = match?.pages ?? []
+  })
+
+  return crumbs
+})
+
+// A page with no markdown yet (e.g. just created) is opened straight into the
+// editor instead of the empty read-only view + drawer.
+const hasContent = computed(() => !!props.page?.content?.trim())
 
 const editorOpen = ref(false)
 defineShortcuts({
@@ -26,30 +67,51 @@ async function onSaved() {
 </script>
 
 <template>
-  <main class="flex-1 min-w-0">
+  <main class="flex flex-col h-full min-h-0 min-w-0 pt-6">
     <template v-if="page">
-      <!-- Breadcrumb -->
-      <div class="flex justify-between items-center mb-6">
+      <!-- Breadcrumb: fixed header band, kept out of the scroll region. Spans
+           the full content width with its own padding. -->
+      <div
+          class="flex justify-between items-center gap-4 flex-shrink-0 -mt-6 p-5  border-gray-200 dark:border-gray-800">
         <UBreadcrumb :items="breadcrumbs"/>
-        <UDrawer v-model:open="editorOpen" handle-only should-scale-background set-background-color-on-scale>
+        <UDrawer v-if="hasContent && loggedIn" v-model:open="editorOpen" handle-only should-scale-background
+                 set-background-color-on-scale>
           <UButton label="Edit" color="secondary" variant="subtle" icon="i-lucide-eye"/>
 
           <template #content>
             <UContainer class="overflow-y-scroll">
-              <Editor :value="page.content" :slug="slug" @saved="onSaved"></Editor>
+              <Editor :value="page.content" :page-id="page.id" @saved="onSaved"></Editor>
             </UContainer>
           </template>
         </UDrawer>
       </div>
 
+      <!-- Scrolling content region (everything below the breadcrumb). Padding
+           lives here so the scrollbar sits in the gutter, clear of the text; the
+           right margin keeps the scrollbar off the table of contents. -->
+      <div class="flex-1 min-h-0 overflow-y-auto px-4 sm:px-5 lg:px-6 mr-3">
+        <!-- Empty page: edit inline so the user can start writing right away. -->
+        <Editor
+            v-if="!hasContent && loggedIn"
+            :key="page.id"
+            :value="page.content"
+            :page-id="page.id"
+            @saved="onSaved"
+        />
 
-      <article class="prose dark:prose-invert max-w-none overflow-y-scroll">
-        <ContentRenderer :key="slug" :value="page" class="mt-4"/>
-      </article>
+        <!-- Empty page, logged out: read-only prompt to sign in. -->
+        <div v-else-if="!hasContent" class="py-16 text-center">
+          <UIcon name="i-lucide-file-text" class="size-10 text-gray-400 mx-auto mb-3"/>
+          <p class="text-gray-500 mb-4">This page has no content yet.</p>
+          <UButton size="sm" icon="i-lucide-log-in" label="Sign in to edit" @click="login(route.fullPath)"/>
+        </div>
 
-      <!-- Extra scroll space below the content. -->
-      <div class="h-[200px]" aria-hidden="true"/>
-
+        <template v-else>
+          <article class="prose dark:prose-invert max-w-none mt-6">
+            <ContentRenderer :key="slug" :value="page" :components="mdcComponents"/>
+          </article>
+        </template>
+      </div>
     </template>
 
     <template v-else>

@@ -7,6 +7,7 @@ import { Emoji, gitHubEmojis } from '@tiptap/extension-emoji'
 import { TextAlign } from '@tiptap/extension-text-align'
 import { CodeBlockShiki } from 'tiptap-extension-code-block-shiki'
 import { ImageUpload } from './EditorImageUploadExtension'
+import { MdcCard } from './MdcCardExtension'
 import { useEditorCompletion } from './EditorUseCompletion'
 import EditorLinkPopover from './EditorLinkPopover.vue'
 
@@ -16,7 +17,7 @@ const { extension: completionExtension, handlers: aiHandlers, isLoading: aiLoadi
 
 const props = defineProps<{
   value: string,
-  slug?: string,
+  pageId?: number,
 }>()
 
 const emit = defineEmits<{ saved: [] }>()
@@ -27,10 +28,10 @@ const saving = ref(false)
 const toast = useToast()
 
 async function save() {
-  if (!props.slug) return
+  if (props.pageId == null) return
   saving.value = true
   try {
-    await $fetch(`/api/page/${props.slug}`, {
+    await $fetch(`/api/page/${props.pageId}`, {
       method: 'PUT',
       body: { content: content.value },
     })
@@ -58,6 +59,16 @@ const customHandlers = {
     canExecute: (editor: Editor) => editor.can().insertContent({ type: 'imageUpload' }),
     execute: (editor: Editor) => editor.chain().focus().insertContent({ type: 'imageUpload' }),
     isActive: (editor: Editor) => editor.isActive('imageUpload'),
+    isDisabled: undefined
+  },
+  insertWCard: {
+    canExecute: (editor: Editor) => editor.can().insertContent({ type: 'mdcCard' }),
+    execute: (editor: Editor) => editor.chain().focus().insertContent({
+      type: 'mdcCard',
+      attrs: { title: 'Title', variant: 'info' },
+      content: [{ type: 'paragraph' }]
+    }),
+    isActive: (editor: Editor) => editor.isActive('mdcCard'),
     isDisabled: undefined
   },
   ...aiHandlers
@@ -533,6 +544,10 @@ const suggestionItems = [[{
   label: 'Mention',
   icon: 'i-lucide-at-sign'
 }, {
+  kind: 'insertWCard',
+  label: 'WCard',
+  icon: 'i-lucide-square-stack'
+}, {
   kind: 'emoji',
   label: 'Emoji',
   icon: 'i-lucide-smile-plus'
@@ -583,6 +598,7 @@ const emojiItems: EditorEmojiMenuItem[] = gitHubEmojis.filter(emoji => !emoji.na
       Emoji,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
       ImageUpload,
+      MdcCard,
       CodeBlockShiki.configure({
         defaultTheme: 'material-theme',
         themes: {

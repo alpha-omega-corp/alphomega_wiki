@@ -26,6 +26,7 @@ export default defineEventHandler(async (event) => {
     })
 
     return {
+        id: page.id,
         title: page.title,
         slug: page.slug,
         tags: page.tags,

@@ -1,40 +1,37 @@
 <template>
-  <div class="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-950">
-    <!-- Top Navigation Bar -->
+  <div class="h-dvh flex flex-col overflow-hidden bg-gray-50 dark:bg-gray-950">
+    <!-- Top bar: brand + auth control, visible on every page. -->
     <header
-        class="sticky top-0 z-50 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur">
-      <UContainer>
-        <div class="flex items-center justify-between h-16">
-          <div class="flex items-center gap-3">
+        class="flex-shrink-0 h-14 flex items-center justify-between gap-4 px-4 sm:px-6 border-b border-default bg-white/80 dark:bg-gray-900/80 backdrop-blur"
+    >
+      <NuxtLink to="/" class="flex items-center gap-2 font-semibold">
+        <UIcon name="i-lucide-book-open-text" class="size-5 text-primary-500"/>
+        <span>DevDocs</span>
+      </NuxtLink>
 
-            <nav class="hidden md:flex items-center gap-1">
-              <UButton
-                  v-for="item in navItems"
-                  :key="item.to"
-                  :to="item.to"
-                  variant="ghost"
-                  color="neutral"
-                  size="lg"
-                  :label="item.label"
-              />
-            </nav>
-          </div>
-
-          <div class="flex items-center gap-3">
-            <UButton
-                icon="i-heroicons-moon"
-                variant="ghost"
-                color="neutral"
-                size="sm"
-                @click="colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'"
-            />
-          </div>
-        </div>
-      </UContainer>
+      <div class="flex items-center gap-1.5">
+        <UButton
+            to="/"
+            icon="i-lucide-house"
+            label="Home"
+            color="neutral"
+            variant="ghost"
+            size="sm"
+        />
+        <UButton
+            :icon="isDark ? 'i-lucide-moon' : 'i-lucide-sun'"
+            color="neutral"
+            variant="ghost"
+            size="sm"
+            aria-label="Toggle theme"
+            @click="isDark = !isDark"
+        />
+        <AuthButton/>
+      </div>
     </header>
 
-    <!-- App Content -->
-    <main class="flex-1">
+    <!-- App Content (the scroll boundary; individual columns scroll inside it) -->
+    <main class="flex-1 min-h-0 overflow-y-auto">
       <slot/>
     </main>
 
@@ -78,14 +75,15 @@
 </template>
 
 <script setup lang="ts">
-const colorMode = useColorMode()
-
-const navItems = [
-  {label: 'Home', to: '/'},
-  {label: 'Documentation', to: '/docs'},
-]
-
 import type {NavigationMenuItem} from '@nuxt/ui'
+
+const colorMode = useColorMode()
+const isDark = computed({
+  get: () => colorMode.value === 'dark',
+  set: (v) => {
+    colorMode.preference = v ? 'dark' : 'light'
+  },
+})
 
 const items: NavigationMenuItem[] = [
   {
