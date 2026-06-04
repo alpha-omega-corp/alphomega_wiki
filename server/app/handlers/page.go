@@ -30,7 +30,9 @@ func (h *PageHandler) GetAll() (*[]models.Page, error) {
 	// in a single query and assemble the parent/child tree in memory. This
 	// nests pages as deep as the data goes.
 	all, err := h.repository.GetAll(context.Background(), func(q *bun.SelectQuery) *bun.SelectQuery {
-		return q.ExcludeColumn("content", "excerpt").OrderExpr("id ASC")
+		// Order by explicit position first so drag-and-drop reordering sticks;
+		// fall back to id for rows that share a position (e.g. freshly seeded).
+		return q.ExcludeColumn("content", "excerpt").OrderExpr("position ASC, id ASC")
 	})
 	if err != nil {
 		return nil, err

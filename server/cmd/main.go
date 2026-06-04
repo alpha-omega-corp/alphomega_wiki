@@ -11,6 +11,7 @@ import (
 	"syscall"
 	"time"
 	"wiki/app/controllers"
+	"wiki/app/middleware"
 	"wiki/app/models"
 
 	"github.com/uptrace/bun"
@@ -53,6 +54,7 @@ func main() {
 
 	if err := db.ResetModel(ctx, []interface{}{
 		(*models.Page)(nil),
+		(*models.Favorite)(nil),
 	}...); err != nil {
 		panic(err)
 	}
@@ -81,12 +83,27 @@ func main() {
 		)))
 
 	pageHandler := controllers.NewPageHandler(db)
+	favoriteHandler := controllers.NewFavoriteController(db)
+
+	// Mutations require a valid AOAuth access token (verified against the
+	// issuer's JWKS); reads stay public.
+	issuer := os.Getenv("AOAUTH_ISSUER")
+	if issuer == "" {
+		issuer = "http://localhost:8080"
+	}
+	auth := middleware.NewJWTVerifier(issuer).Middleware
 
 	router.GET("/pages", pageHandler.GetAll)
-	router.POST("/page", pageHandler.Create)
 	router.GET("/page/:id", pageHandler.GetOne)
-	router.PUT("/page/:id", pageHandler.Update)
-	router.DELETE("/page/:id", pageHandler.Delete)
+	router.POST("/page", auth(pageHandler.Create))
+	router.PUT("/page/:id", auth(pageHandler.Update))
+	router.DELETE("/page/:id", auth(pageHandler.Delete))
+
+	// Favorites are per-user; every route is authenticated so the handler can
+	// scope to the caller (taken from the verified token, not the request).
+	router.GET("/favorites", auth(favoriteHandler.List))
+	router.POST("/favorite", auth(favoriteHandler.Add))
+	router.DELETE("/favorite/:id", auth(favoriteHandler.Remove))
 
 	httpServer := &http.Server{
 		Addr:         "localhost:1000",

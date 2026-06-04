@@ -3,6 +3,7 @@
     - id: 1
       slug: article-testy
       title: Article Testy
+      icon: i-lucide-file-text
       published: true
       tags:
         - test
@@ -15,6 +16,7 @@
     - id: 2
       slug: api
       title: API Reference
+      icon: i-lucide-code
       published: true
       tags:
         - api
@@ -119,6 +121,7 @@
     - id: 3
       slug: getting-started
       title: Getting Started
+      icon: i-lucide-rocket
       published: true
       parent_id: 1
       tags:
@@ -212,6 +215,7 @@
     - id: 4
       slug: configuration
       title: Configuration
+      icon: i-lucide-settings
       published: true
       parent_id: 2
       tags:
@@ -328,6 +332,7 @@
     - id: 5
       slug: deployment
       title: Deployment
+      icon: i-lucide-cloud-upload
       published: true
       tags:
         - deployment
@@ -368,6 +373,7 @@
     - id: 6
       slug: deployment-vercel
       title: Deploying to Vercel
+      icon: i-lucide-triangle
       published: true
       parent_id: 5
       tags:
@@ -402,6 +408,7 @@
     - id: 7
       slug: deployment-fly
       title: Deploying to Fly.io
+      icon: i-lucide-plane
       published: true
       parent_id: 5
       tags:
@@ -441,6 +448,7 @@
     - id: 8
       slug: authentication
       title: Authentication
+      icon: i-lucide-lock
       published: true
       tags:
         - auth
@@ -488,6 +496,7 @@
     - id: 9
       slug: authentication-roles
       title: Roles & Permissions
+      icon: i-lucide-users
       published: true
       parent_id: 8
       tags:
@@ -529,6 +538,7 @@
     - id: 10
       slug: authentication-sso
       title: SSO / OAuth
+      icon: i-lucide-key-round
       published: true
       parent_id: 8
       tags:
