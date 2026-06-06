@@ -4,4 +4,5 @@ docs-app/.output
 docs-app/.data
 docs-app/.env
 server/.idea
+server/.env
 *.log

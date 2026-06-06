@@ -34,7 +34,6 @@ COPY --from=build-backend /out/wiki /app/wiki
 COPY server/cmd/migration.yml /app/cmd/migration.yml
 # godotenv.Load() fatals if .env is absent; bake a copy as a fallback.
 # Runtime -e / environment: overrides take precedence over file values.
-COPY server/.env /app/.env
 
 # Nuxt frontend build output (self-contained, includes compiled native bindings).
 COPY --from=build-frontend /app/.output /app/.output
