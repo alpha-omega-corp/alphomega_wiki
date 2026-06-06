@@ -55,6 +55,17 @@
       />
     </ul>
 
+    <div v-if="status === 'success' && !pages?.length" class="mt-4 flex flex-col items-center gap-2 rounded-lg border border-dashed border-gray-200 dark:border-gray-700 px-4 py-6 text-center">
+      <UIcon name="i-lucide-file-plus" class="size-7 text-gray-300 dark:text-gray-600" />
+      <p class="text-xs text-gray-400 dark:text-gray-500">No pages yet</p>
+      <UButton
+          size="xs"
+          icon="i-lucide-plus"
+          label="Create page"
+          @click="selectedParentId = null; createPageModal = true"
+      />
+    </div>
+
     <CreatePage
         v-model:open="createPageModal"
         v-model:parent-id="selectedParentId"

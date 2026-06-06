@@ -29,6 +29,7 @@ defineProps<{
         <UContentToc
             title="On this page"
             highlight
+            color="success"
             highlight-color="primary"
             highlight-variant="circuit"
             :links="links"
@@ -36,7 +37,7 @@ defineProps<{
               root: 'border-0 bg-transparent',
               container: 'pt-0 sm:pt-0 lg:pt-0',
               title: 'uppercase font-mono tracking-wider mb-2',
-              link: 'text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 py-0.5',
+              link: 'hover:text-success py-0.5',
               linkText: 'whitespace-normal',
             }"
         />

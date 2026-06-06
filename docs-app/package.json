@@ -18,7 +18,9 @@
     "vue": "^3.5.35"
   },
   "devDependencies": {
+    "@iconify-json/heroicons": "^1.2.3",
     "@iconify-json/lucide": "^1.2.111",
+    "@iconify-json/simple-icons": "^1.2.85",
     "@types/better-sqlite3": "^7.6.13",
     "typescript": "^5.5.3"
   },

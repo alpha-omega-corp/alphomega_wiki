@@ -5,11 +5,12 @@
 .DS_Store
 .DS_STORE
 
-# Nuxt build output
-.content/
 /docs-app/node_modules
+
+/docs-app/.env
 /docs-app/.data
 /docs-app/.nuxt
-
+/docs-app/.output
+/docs-aps/public
 # per-machine overrides
 .claude/settings.local.json

@@ -3,6 +3,7 @@ module wiki
 go 1.25
 
 require (
+	github.com/joho/godotenv v1.5.1
 	github.com/uptrace/bun v1.2.18
 	github.com/uptrace/bun/dbfixture v1.2.18
 	github.com/uptrace/bun/dialect/pgdialect v1.2.18
@@ -11,6 +12,7 @@ require (
 	github.com/uptrace/bunrouter v1.0.23
 	github.com/uptrace/bunrouter/extra/bunrouterotel v1.0.23
 	github.com/uptrace/bunrouter/extra/reqlog v1.0.23
+	github.com/urfave/cli/v3 v3.9.0
 )
 
 require (

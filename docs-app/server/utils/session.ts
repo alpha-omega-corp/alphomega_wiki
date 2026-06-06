@@ -34,6 +34,14 @@ export function oauthConfig() {
   }
 }
 
+// internalIssuerUrl returns the AOAuth base URL for server-side calls
+// (token exchange, userinfo, token refresh). When running in a container,
+// AOAUTH_INTERNAL_URL should point to the auth server's container-reachable
+// address while AOAUTH_ISSUER stays as the browser-facing URL.
+export function internalIssuerUrl(): string {
+  return process.env.AOAUTH_INTERNAL_URL || oauthConfig().issuer
+}
+
 // bearer builds an Authorization header for the upstream Go backend, or {} when
 // there is no token.
 export function bearer(token?: string): Record<string, string> {
@@ -49,7 +57,7 @@ interface RefreshResponse {
 // refreshTokens exchanges a refresh token for a fresh access token at AOAuth.
 async function refreshTokens(refreshToken: string): Promise<RefreshResponse> {
   const oauth = oauthConfig()
-  return await $fetch<RefreshResponse>(`${oauth.issuer}/token`, {
+  return await $fetch<RefreshResponse>(`${internalIssuerUrl()}/token`, {
     method: 'POST',
     headers: {
       Authorization:

@@ -13,7 +13,7 @@ const highlighter = createShikiHighlighter({
 export default defineEventHandler(async (event) => {
     const id = getRouterParam(event, 'id')
 
-    const page: Page = await $fetch<Page>(`http://localhost:1000/page/${id}`)
+    const page: Page = await $fetch<Page>(`${backendUrl()}/page/${id}`)
 
     const parsed = await parseMarkdown(page.content, {
         highlight: {

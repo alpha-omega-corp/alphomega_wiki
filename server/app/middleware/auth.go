@@ -59,11 +59,17 @@ type JWTVerifier struct {
 }
 
 // NewJWTVerifier builds a verifier for tokens issued by the given AOAuth issuer.
-func NewJWTVerifier(issuer string) *JWTVerifier {
+// jwksURL overrides where the JWKS is fetched from; pass "" to derive it from issuer.
+// This lets container deployments use an internal URL for JWKS while keeping the
+// public issuer value for iss-claim validation.
+func NewJWTVerifier(issuer, jwksURL string) *JWTVerifier {
 	issuer = strings.TrimRight(issuer, "/")
+	if jwksURL == "" {
+		jwksURL = issuer + "/.well-known/jwks.json"
+	}
 	return &JWTVerifier{
 		issuer:  issuer,
-		jwksURL: issuer + "/.well-known/jwks.json",
+		jwksURL: jwksURL,
 		client:  &http.Client{Timeout: 5 * time.Second},
 		keys:    map[string]*rsa.PublicKey{},
 	}

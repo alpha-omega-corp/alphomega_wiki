@@ -1,0 +1,7 @@
+docs-app/node_modules
+docs-app/.nuxt
+docs-app/.output
+docs-app/.data
+docs-app/.env
+server/.idea
+*.log

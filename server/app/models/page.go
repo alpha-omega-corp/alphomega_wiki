@@ -13,6 +13,7 @@ type Page struct {
 	Slug      string    `bun:"slug,notnull" json:"slug"`
 	Title     string    `bun:"title,notnull" json:"title"`
 	Icon      string    `bun:"icon" json:"icon"`
+	Test      string    `bun:"test" json:"test"`
 	Content   string    `bun:"content" json:"content"`
 	Excerpt   string    `bun:"excerpt" json:"excerpt,omitempty"`
 	Tags      []string  `bun:"tags,array" json:"tags"`

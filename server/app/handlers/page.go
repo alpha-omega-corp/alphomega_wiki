@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"context"
-	"fmt"
 	"wiki/app/models"
 	"wiki/utils"
 
@@ -68,7 +67,6 @@ func (h *PageHandler) GetAll() (*[]models.Page, error) {
 }
 
 func (h *PageHandler) Create(page *models.Page) (*models.Page, error) {
-	fmt.Println(page)
 	return h.repository.Create(context.Background(), page)
 }
 

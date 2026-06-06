@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const token = await $fetch<TokenResponse>(`${oauth.issuer}/token`, {
+    const token = await $fetch<TokenResponse>(`${internalIssuerUrl()}/token`, {
       method: 'POST',
       headers: {
         Authorization:
@@ -51,7 +51,7 @@ export default defineEventHandler(async (event) => {
       }),
     })
 
-    const userinfo = await $fetch<UserInfo>(`${oauth.issuer}/userinfo`, {
+    const userinfo = await $fetch<UserInfo>(`${internalIssuerUrl()}/userinfo`, {
       headers: { Authorization: `Bearer ${token.access_token}` },
     }).catch(() => null)
 
