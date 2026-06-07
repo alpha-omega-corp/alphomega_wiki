@@ -12,5 +12,7 @@
 /docs-app/.nuxt
 /docs-app/.output
 /docs-aps/public
+
+/server/.env
 # per-machine overrides
 .claude/settings.local.json

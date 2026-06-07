@@ -43,6 +43,9 @@ export default defineNuxtConfig({
     runtimeConfig: {
         oauth: {
             issuer: '',
+            // Container-reachable AOAuth URL for server-side calls (token
+            // exchange / userinfo / refresh). Defaults to `issuer` when unset.
+            internalUrl: '',
             clientId: '',
             clientSecret: '',
             redirectUri: '',

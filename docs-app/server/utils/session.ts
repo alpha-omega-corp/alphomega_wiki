@@ -20,26 +20,27 @@ export interface SessionData {
   returnTo?: string
 }
 
-// oauthConfig resolves the OAuth settings, preferring runtime process.env over
-// the build-time runtimeConfig defaults. Reading process.env at runtime keeps
-// the same AOAUTH_* names working regardless of build caching or Nuxt's NUXT_
-// override convention.
+// oauthConfig resolves the OAuth settings from Nuxt runtimeConfig, which is
+// populated from the NUXT_OAUTH_* variables in docs-app/.env. Keeping every
+// value in .env means there are no OAuth secrets hardcoded here or duplicated
+// in docker-compose.
 export function oauthConfig() {
   const c = (useRuntimeConfig().oauth ?? {}) as Record<string, string>
   return {
-    issuer: process.env.AOAUTH_ISSUER || c.issuer || 'http://localhost:8080',
-    clientId: process.env.AOAUTH_CLIENT_ID || c.clientId || 'demo-client',
-    clientSecret: process.env.AOAUTH_CLIENT_SECRET || c.clientSecret || 'demo-secret',
-    redirectUri: process.env.AOAUTH_REDIRECT_URI || c.redirectUri || 'http://localhost:3000/callback',
+    issuer: c.issuer || 'http://localhost:8080',
+    clientId: c.clientId || 'demo-client',
+    clientSecret: c.clientSecret || 'demo-secret',
+    redirectUri: c.redirectUri || 'http://localhost:3000/callback',
   }
 }
 
 // internalIssuerUrl returns the AOAuth base URL for server-side calls
 // (token exchange, userinfo, token refresh). When running in a container,
-// AOAUTH_INTERNAL_URL should point to the auth server's container-reachable
-// address while AOAUTH_ISSUER stays as the browser-facing URL.
+// NUXT_OAUTH_INTERNAL_URL should point to the auth server's container-reachable
+// address while NUXT_OAUTH_ISSUER stays as the browser-facing URL.
 export function internalIssuerUrl(): string {
-  return process.env.AOAUTH_INTERNAL_URL || oauthConfig().issuer
+  const c = (useRuntimeConfig().oauth ?? {}) as Record<string, string>
+  return c.internalUrl || oauthConfig().issuer
 }
 
 // bearer builds an Authorization header for the upstream Go backend, or {} when
@@ -103,9 +104,7 @@ export async function requireAuth(event: H3Event) {
 // request. sameSite=lax so the cookie survives the top-level redirect back from
 // the authorization server.
 export function authSession(event: H3Event) {
-  const password =
-    process.env.AUTH_SESSION_PASSWORD ||
-    (useRuntimeConfig().session?.password as string)
+  const password = useRuntimeConfig().session?.password as string
   return useSession<SessionData>(event, {
     password,
     name: 'docs_session',
