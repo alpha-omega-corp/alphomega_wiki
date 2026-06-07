@@ -10,5 +10,5 @@ build:
 	docker build -t $(IMAGE) .
 
 # Run the combined backend+frontend container.
-run: build
-	docker compose up -d
+run:
+	docker compose up -d --force-recreate

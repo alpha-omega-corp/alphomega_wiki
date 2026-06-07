@@ -36,6 +36,9 @@ services:
     volumes:
       - ./server/.env:/app/.env
 
+    env_file:
+      - ./docs-app/.env
+
     extra_hosts:
       - "host.docker.internal:host-gateway"
     environment:

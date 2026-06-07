@@ -1,28 +1,29 @@
 <template>
   <UApp>
     <NuxtLayout>
-      <NuxtPage />
+      <NuxtPage/>
     </NuxtLayout>
 
     <ClientOnly>
       <LazyUContentSearch
-        :navigation="searchNavigation"
-        :files="searchFiles"
-        :fuse="{ resultLimit: 20 }"
-        :color-mode="false"
+          :navigation="searchNavigation"
+          :files="searchFiles"
+          :fuse="{ resultLimit: 20 }"
+          :color-mode="false"
       />
     </ClientOnly>
   </UApp>
 </template>
 
 <script setup lang="ts">
-import type { ContentNavigationItem } from '@nuxt/content'
-import type { Page } from '~/types/page'
+import type {ContentNavigationItem} from '@nuxt/content'
+import type {Page} from '~/types/page'
+
 
 // Shares the same cache key as DocsSidebar so the tree is only fetched once.
-const { data: pages } = await useAsyncData(
-  'pages',
-  () => $fetch<Page[]>('/api/pages')
+const {data: pages} = await useAsyncData(
+    'pages',
+    () => $fetch<Page[]>('/api/pages')
 )
 
 // Flatten the page tree: every page is a real doc, so each becomes a
@@ -52,9 +53,9 @@ const searchFiles = computed<SearchFile[]>(() => flatten(pages.value ?? []))
 // A flat navigation list keeps every page (including parents) searchable;
 // the `files` above are matched against these paths to populate the palette.
 const searchNavigation = computed<ContentNavigationItem[]>(() =>
-  searchFiles.value.map(file => ({
-    title: file.title,
-    path: file.id,
-  })),
+    searchFiles.value.map(file => ({
+      title: file.title,
+      path: file.id,
+    })),
 )
 </script>
